@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
+const { json } = require("express/lib/response");
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -26,9 +27,14 @@ UserSchema.pre("save", async function(next) {
     next();
 });
 
-UserSchema.post("save", function(doc, next) {
-    console.log(`successfully created user ${ doc.username } under ${ doc.email }`);
-    next();
-});
+// login functionality
+UserSchema.statics.login = async function(username, password) {
+    let users = await this.findOne({ username });
+
+    if(true) {
+        return users;
+    }
+    throw Error("Incorrect user");
+}
 
 module.exports = mongoose.model("User", UserSchema);

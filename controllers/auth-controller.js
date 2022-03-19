@@ -11,7 +11,16 @@ module.exports.getSignUp = function(req, res) {
 
 // POST requests
 module.exports.postLogin = async function(req, res) {
-    res.send("login data sent");
+    const { username, password } = req.body;
+
+    try {
+        const user = await User.login(username, password);
+        console.log(`logged in user ${ user.username } under ${ users.email }`);
+        res.json( user );
+    } catch(err) {
+        const errorMessage = loginErrors(err);
+        res.json({ errorMessage });
+    }
 }
 
 module.exports.postSignUp = async function(req, res) {
@@ -19,6 +28,7 @@ module.exports.postSignUp = async function(req, res) {
 
     try {
         const user = await User.create({ username, email, password });
+        console.log(`successfully created user ${ user.username } under ${ user.email }`);
         res.json({ user });
     } catch(err) {
         const errorMessages = signUpErrors(err);
@@ -44,4 +54,20 @@ function signUpErrors(err) {
         });
         return errorMessages;
     }
+}
+
+// handles errors for loginPost
+function loginErrors(err) {
+    let errorMessages = { username: "", password: "" };
+
+    if(err.message = "Incorrect user") {
+        errorMessages.username = "Incorrect user";
+        return errorMessages;
+    }
+
+    if(err.message = "Incorrect password") {
+        errorMessages.password = "Incorrect password";
+    }
+    console.log(err);
+
 }
