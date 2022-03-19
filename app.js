@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 // creation of routes functionality
 const app = express();
-app.listen()
+app.listen();
 
 // database connection
 const dbURI = 'mongodb+srv://nkululek0:mongodb@certification.bscdz.mongodb.net/node-auth';
