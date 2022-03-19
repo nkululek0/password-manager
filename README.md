@@ -1,0 +1,1 @@
+# Safe Store password manager
