@@ -19,7 +19,6 @@ module.exports.postSignUp = async function(req, res) {
 
     try {
         const user = await User.create({ username, email, password });
-        console.log(`user ${user.username} successfully created`);
         res.json({ user });
     } catch(err) {
         const errorMessages = signUpErrors(err);
@@ -27,13 +26,13 @@ module.exports.postSignUp = async function(req, res) {
     }
 }
 
-// function that deals with errors
+// function that deals with errors for postSignUp
 function signUpErrors(err) {
     let errorMessages = { username: "", email: "", password: "" };
 
     // duplicate email error
     if(err.code === 11000) {
-        errorMessages.email = "This email is already registered"
+        errorMessages.email = "This email is already registered";
         console.log(errorMessages);
         return errorMessages;
     }
