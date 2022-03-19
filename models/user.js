@@ -27,7 +27,7 @@ UserSchema.pre("save", async function(next) {
 });
 
 UserSchema.post("save", function(doc, next) {
-    console.log(`successfully created user ${ doc.user } under ${ doc.email }`);
+    console.log(`successfully created user ${ doc.username } under ${ doc.email }`);
     next();
 });
 
