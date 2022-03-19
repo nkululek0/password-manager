@@ -1,6 +1,6 @@
-import User from "../models/user.js";
+const User = require("../models/user.js");
 
 // GET requests
-export function getLogin(req, res) {
+module.exports.getLogin = (req, res) => {
     res.send("login page");
 }

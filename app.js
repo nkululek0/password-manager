@@ -1,6 +1,6 @@
-import express from "express";
-import appRoutes from "./routes/app-routes.js";
-import mongoose from "mongoose";
+const express = require("express");
+const appRoutes = require("./routes/app-routes.js");
+const mongoose = require("mongoose");
 
 // creation of routes functionality
 const app = express();
