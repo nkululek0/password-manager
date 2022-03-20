@@ -10,31 +10,34 @@ module.exports.getSignUp = function(req, res) {
 }
 
 // POST requests
-module.exports.postLogin = async function(req, res) {
-    const { username, password } = req.body;
-
-    try {
-        const user = await User.login(username, password);
-        console.log(`logged in user ${ user.username } under ${ users.email }`);
-        res.json( user );
-    } catch(err) {
-        const errorMessage = loginErrors(err);
-        res.json({ errorMessage });
-    }
-}
-
 module.exports.postSignUp = async function(req, res) {
     const { username, email, password } = req.body;
 
     try {
         const user = await User.create({ username, email, password });
-        console.log(`successfully created user ${ user.username } under ${ user.email }`);
+        console.log(`successfully created user ${ user.email }`);
         res.json({ user });
     } catch(err) {
         const errorMessages = signUpErrors(err);
+        console.log(errorMessages);
         res.json({ errorMessages });
     }
 }
+
+module.exports.postLogin = async function(req, res) {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.login(email, password);
+        console.log(`logged in user ${ user.email }`);
+        res.json({ user });
+    } catch(err) {
+        const errorMessages = loginErrors(err);
+        console.log(errorMessages);
+        res.json({ errorMessages });
+    }
+}
+
 
 // function that deals with errors for postSignUp
 function signUpErrors(err) {
@@ -60,14 +63,15 @@ function signUpErrors(err) {
 function loginErrors(err) {
     let errorMessages = { username: "", password: "" };
 
+    // incorrect email error
     if(err.message = "Incorrect user") {
-        errorMessages.username = "Incorrect user";
+        errorMessages.username = "Please enter valid email";
         return errorMessages;
     }
 
+    // incorrect password error
     if(err.message = "Incorrect password") {
-        errorMessages.password = "Incorrect password";
+        errorMessages.password = "Please enter valid password";
+        return errorMessages;
     }
-    console.log(err);
-
 }

@@ -4,10 +4,6 @@ const bcrypt = require("bcrypt");
 const { json } = require("express/lib/response");
 
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: [true, "Please enter a username"],        
-    },
     email: {
         type: String,
         required: [true , "Please enter an email"],
@@ -28,13 +24,17 @@ UserSchema.pre("save", async function(next) {
 });
 
 // login functionality
-UserSchema.statics.login = async function(username, password) {
-    let users = await this.findOne({ username });
+UserSchema.statics.login = async function(email, password) {
+    let user = await this.findOne({ email });
 
-    if(true) {
-        return users;
+    if(user) {
+        let authUser = await bcrypt.compare(password, user.password);
+        if(authUser) {
+            return user;
+        }
+        throw Error("Incorrect password");
     }
-    throw Error("Incorrect user");
+    throw Error("Incorrect email");
 }
 
 module.exports = mongoose.model("User", UserSchema);
