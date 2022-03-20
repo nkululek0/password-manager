@@ -49,7 +49,6 @@ function signUpErrors(err) {
     // duplicate email error
     if(err.code === 11000) {
         errorMessages.email = "This email is already registered";
-        console.log(errorMessages);
         return errorMessages;
     }
 
