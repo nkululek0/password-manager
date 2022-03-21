@@ -82,5 +82,5 @@ function loginErrors(err) {
 const maxAge = 600;
 
 function createToken(payload) {
-    return jwt.sign({ payload }, "secrect key", { expiresIn: maxAge });
+    return jwt.sign({ payload }, process.env.SECRECT_KEY, { expiresIn: maxAge });
 }

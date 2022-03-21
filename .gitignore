@@ -1,3 +1,4 @@
 acess_token = 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
 node_modules/
 test-routes.http
+.env
