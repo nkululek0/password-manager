@@ -2,13 +2,8 @@ const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
 
 // GET requests
-module.exports.getLogin = function (req, res) {
-    res.send("login page");
-}
-
-module.exports.getSignUp = function(req, res) {
-    res.send("sign up page");
-}
+module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
+module.exports.getLogin = function (req, res) { res.send("login page"); }    
 
 // POST requests
 module.exports.postSignUp = async function(req, res) {
@@ -39,6 +34,10 @@ module.exports.postLogin = async function(req, res) {
         console.log(errorMessages);
         res.json({ errorMessages });
     }
+}
+
+module.exports.putPasswordAccount = function(req, res) {
+
 }
 
 

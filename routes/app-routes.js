@@ -10,6 +10,6 @@ router.post("/api/login", authController.postLogin);
 router.post("/api/sign-up", authController.postSignUp);
 
 // PUT requests
-router.put("/api/user", authController.putAccountCard);
+router.put("/api/user", authController.putPasswordAccount);
 
 module.exports = router;
