@@ -8,4 +8,8 @@ router.get("/api/sign-up", authController.getSignUp);
 // POST requests
 router.post("/api/login", authController.postLogin);
 router.post("/api/sign-up", authController.postSignUp);
+
+// PUT requests
+router.put("/api/user", authController.putAccountCard);
+
 module.exports = router;
