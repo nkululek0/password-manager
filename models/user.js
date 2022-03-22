@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
-const { json } = require("express/lib/response");
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -14,7 +13,21 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter password"],
         minlength: [8, "Please enter a password with a minimum of 8 characters"]
-    }
+    },
+    accounts: [{
+        accountName: {
+            type: String,
+            required: [true, "Please enter the account name"]
+        },
+        accountUsername: {
+            type: String,
+            required: [true, "Please enter the account username"]
+        },
+        accountPassword: {
+            type: String,
+            required: [true, "Please enter the account password"]
+        }
+    }]
 });
 
 UserSchema.pre("save", async function(next) {
