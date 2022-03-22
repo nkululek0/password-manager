@@ -1,9 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const appRoutes = require("./routes/app-routes.js");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const dotenv = require("dotenv");
-dotenv.config();
 
 // creation of routes functionality
 const app = express();
@@ -19,4 +18,4 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((err) => console.log(err));
 
 // app routes
-app.use(appRoutes);
+app.use("/api", appRoutes);

@@ -3,7 +3,16 @@ const jwt = require("jsonwebtoken");
 
 // GET requests
 module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
-module.exports.getLogin = function (req, res) { res.send("login page"); }    
+module.exports.getLogin = function (req, res) { res.send("login page"); }
+
+module.exports.getAllUsers = async function(req, res) {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
+}    
 
 // POST requests
 module.exports.postSignUp = async function(req, res) {
