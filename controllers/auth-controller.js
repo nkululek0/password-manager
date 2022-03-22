@@ -2,9 +2,13 @@ const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
 
 // GET requests
+// renders sign up page
 module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
+
+// renders login page
 module.exports.getLogin = function (req, res) { res.send("login page"); }
 
+// gets all users
 module.exports.getAllUsers = async function(req, res) {
     try {
         const users = await User.find();
@@ -12,9 +16,11 @@ module.exports.getAllUsers = async function(req, res) {
     } catch(err) {
         res.status(500).json({ error: err.message });
     }
-}    
+}
+
 
 // POST requests
+// submits content on sign up page
 module.exports.postSignUp = async function(req, res) {
     const { username, email, password } = req.body;
 
@@ -29,6 +35,7 @@ module.exports.postSignUp = async function(req, res) {
     }
 }
 
+// submits content on login page
 module.exports.postLogin = async function(req, res) {
     const { email, password } = req.body;
 
@@ -45,8 +52,23 @@ module.exports.postLogin = async function(req, res) {
     }
 }
 
-module.exports.putPasswordAccount = function(req, res) {
+// submits content when creating a password account
+module.exports.putPasswordAccount = async function(req, res) {
+    const { accountName, accountUsername, accountPassword } = req.body;
 
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, {
+            $push: {
+                accounts: { accountName, accountUsername, accountPassword }
+            }
+        });
+        if(user === null) {
+            res.status(404).json({ error: "user not found"});
+        }
+        res.json({ user });
+    } catch(err) {
+        res.json({ error: err.message });
+    }
 }
 
 
