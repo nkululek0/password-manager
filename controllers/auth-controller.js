@@ -8,16 +8,6 @@ module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
 // renders login page
 module.exports.getLogin = function (req, res) { res.send("login page"); }
 
-// gets all users
-module.exports.getAllUsers = async function(req, res) {
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-}
-
 
 // POST requests
 // submits content on sign up page
@@ -27,7 +17,7 @@ module.exports.postSignUp = async function(req, res) {
     try {
         const user = await User.create({ username, email, password });
         console.log(`successfully created user ${ user.email }`);
-        res.json({ user });
+        res.status(201).json({ user });
     } catch(err) {
         const errorMessages = signUpErrors(err);
         console.log(errorMessages);
@@ -57,14 +47,21 @@ module.exports.putPasswordAccount = async function(req, res) {
     const { accountName, accountUsername, accountPassword } = req.body;
 
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, {
-            $push: {
-                accounts: { accountName, accountUsername, accountPassword }
-            }
-        });
+        const user = await User.findById(req.params.id);
+
+        // user does not exist error
         if(user === null) {
-            res.status(404).json({ error: "user not found"});
+            return res.status(404).json({ error: "user not found"});
         }
+        
+        // password account already exists error
+        if(findValue(user.accounts, accountName)) {
+            return res.status(400).json({ error: "account already exists, update instead?" });
+        } else {
+            user.accounts.push({ accountName, accountUsername, accountPassword });
+            await user.save();
+        }
+        
         res.json({ user });
     } catch(err) {
         res.json({ error: err.message });
@@ -113,4 +110,9 @@ const maxAge = 600;
 
 function createToken(payload) {
     return jwt.sign({ payload }, process.env.SECRECT_KEY, { expiresIn: maxAge });
+}
+
+// find a value and return true if it exists
+function findValue(arr, value) {
+    return arr.find(function(prop) { return prop.accountName === value });
 }

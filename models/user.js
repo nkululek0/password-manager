@@ -15,18 +15,9 @@ const UserSchema = new mongoose.Schema({
         minlength: [8, "Please enter a password with a minimum of 8 characters"]
     },
     accounts: [{
-        accountName: {
-            type: String,
-            required: [true, "Please enter the account name"]
-        },
-        accountUsername: {
-            type: String,
-            required: [true, "Please enter the account username"]
-        },
-        accountPassword: {
-            type: String,
-            required: [true, "Please enter the account password"]
-        }
+        accountName: String,
+        accountUsername: String,
+        accountPassword: String
     }]
 });
 
