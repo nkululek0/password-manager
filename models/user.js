@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
+const cryptoJs = require("crypto-js");
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -22,8 +23,15 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function(next) {
-    let salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
+    // if(!this.hasOwnProperty("__v")) {
+        let salt = await bcrypt.genSalt();
+        this.password = await bcrypt.hash(this.password, salt);
+    // }
+    if(!this.hasOwnProperty("__v")) {
+        console.log("yes");
+    }
+
+
     next();
 });
 

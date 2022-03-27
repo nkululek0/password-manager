@@ -9,7 +9,5 @@ router.get("/sign-up", authController.getSignUp);
 router.post("/users/login", authController.postLogin);
 router.post("/users/sign-up", authController.postSignUp);
 
-// PUT requests
-router.put("/users/:id", authController.putPasswordAccount);
 
 module.exports = router;

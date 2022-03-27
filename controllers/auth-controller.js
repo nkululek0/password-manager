@@ -43,7 +43,7 @@ module.exports.postLogin = async function(req, res) {
 }
 
 // submits content when creating a password account
-module.exports.putPasswordAccount = async function(req, res) {
+module.exports.patchPasswordAccount = async function(req, res) {
     const { accountName, accountUsername, accountPassword } = req.body;
 
     try {
@@ -61,7 +61,7 @@ module.exports.putPasswordAccount = async function(req, res) {
             user.accounts.push({ accountName, accountUsername, accountPassword });
             await user.save();
         }
-        
+        console.log(`created account ${ accountName } for user ${ user.email }`);
         res.json({ user });
     } catch(err) {
         res.json({ error: err.message });
