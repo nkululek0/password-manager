@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 // PUT request
 // submits content when creating a password account
-module.exports.patchPasswordAccount = async function(req, res) {
+module.exports.createPasswordAccount = async function(req, res) {
     const { accountName, accountUsername, accountPassword } = req.body;
 
     try {
