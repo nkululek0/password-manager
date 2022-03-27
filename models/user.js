@@ -23,12 +23,9 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function(next) {
-    // if(!this.hasOwnProperty("__v")) {
+    if(this["__v"] === undefined) {
         let salt = await bcrypt.genSalt();
         this.password = await bcrypt.hash(this.password, salt);
-    // }
-    if(!this.hasOwnProperty("__v")) {
-        console.log("yes");
     }
 
 
