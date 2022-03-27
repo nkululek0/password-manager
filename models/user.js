@@ -22,17 +22,26 @@ const UserSchema = new mongoose.Schema({
     }]
 });
 
+
+// code to completed before documents are saved
 UserSchema.pre("save", async function(next) {
     if(this["__v"] === undefined) {
         let salt = await bcrypt.genSalt();
         this.password = await bcrypt.hash(this.password, salt);
     }
+    
+    if(this.accounts.length) {
+        let password = cryptoJs.AES.encrypt(
+            this.accounts[this.accounts.length -1].accountPassword,
+            process.env.SECRECT_KEY
+            ).toString();
 
-
+        this.accounts[this.accounts.length -1].accountPassword = password;
+    }
     next();
 });
 
-// login functionality
+// login functionality where inserted password are verified before user is logged in
 UserSchema.statics.login = async function(email, password) {
     let user = await this.findOne({ email });
 
