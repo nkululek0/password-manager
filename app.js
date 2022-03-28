@@ -13,7 +13,7 @@ app.use(cookieParser());
 // database connection
 const dbURI = process.env.DATABASE_URI;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result) => app.listen(3030))
+.then((result) => app.listen(4030))
 .catch((err) => console.log(err));
 
 // app routes

@@ -41,7 +41,7 @@ module.exports.postLogin = async function(req, res) {
     } catch(err) {
         const errorMessages = loginErrors(err);
         console.log(errorMessages);
-        res.json({ errorMessages });
+        res.json({ err });
     }
 }
 
