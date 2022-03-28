@@ -1,5 +1,6 @@
 const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // GET requests
 // renders sign up page
@@ -12,10 +13,12 @@ module.exports.getLogin = function (req, res) { res.send("login page"); }
 // POST requests
 // submits content on sign up page
 module.exports.postSignUp = async function(req, res) {
-    const { username, email, password } = req.body;
+    let { username, email, password } = req.body;
 
     try {
+        password = await encrypt(password);
         const user = await User.create({ username, email, password });
+
         console.log(`successfully created user ${ user.email }`);
         res.status(201).json({ user });
     } catch(err) {
@@ -27,7 +30,7 @@ module.exports.postSignUp = async function(req, res) {
 
 // submits content on login page
 module.exports.postLogin = async function(req, res) {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
 
     try {
         const user = await User.login(email, password);
@@ -40,6 +43,23 @@ module.exports.postLogin = async function(req, res) {
         console.log(errorMessages);
         res.json({ errorMessages });
     }
+}
+
+// encrypts and returns encrypted version of message
+async function encrypt(message) {
+    try {
+        let salt = await bcrypt.genSalt();
+        return await bcrypt.hash(message, salt);
+    } catch(err) {
+        res.json({ error: err });
+    }
+}
+
+// jwt and cookie configuration
+const maxAge = 600;
+
+function createToken(payload) {
+    return jwt.sign({ payload }, process.env.SECRECT_KEY, { expiresIn: maxAge });
 }
 
 
@@ -77,11 +97,4 @@ function loginErrors(err) {
         errorMessages.password = "Please enter valid password";
         return errorMessages;
     }
-}
-
-// jwt and cookie configuration
-const maxAge = 600;
-
-function createToken(payload) {
-    return jwt.sign({ payload }, process.env.SECRECT_KEY, { expiresIn: maxAge });
 }

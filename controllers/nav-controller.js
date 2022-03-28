@@ -1,9 +1,10 @@
 const User = require("../models/user");
+const cryptoJs = require("crypto-js");
 
-// PUT request
+// PATCH request
 // submits content when creating a password account
 module.exports.createPasswordAccount = async function(req, res) {
-    const { accountName, accountUsername, accountPassword } = req.body;
+    let { accountName, accountUsername, accountPassword } = req.body;
 
     try {
         const user = await User.findById(req.params.id);
@@ -17,9 +18,12 @@ module.exports.createPasswordAccount = async function(req, res) {
         if(findValue(user.accounts, accountName)) {
             return res.status(400).json({ error: "account already exists, update instead?" });
         } else {
+            accountPassword = encrypt(accountPassword);
+
             user.accounts.push({ accountName, accountUsername, accountPassword });
             await user.save();
         }
+
         console.log(`created account ${ accountName } for user ${ user.email }`);
         res.json({ user });
     } catch(err) {
@@ -27,7 +31,18 @@ module.exports.createPasswordAccount = async function(req, res) {
     }
 }
 
+module.exports.updatePasswordAccount = async function(req, res) {
+    const { accountName, accountUsername, accountPassword } = req.body;
+
+    // fetch user based on id
+}
+
 // find a value and return true if it exists
 function findValue(arr, value) {
     return arr.find(function(prop) { return prop.accountName === value });
+}
+
+// encrypt and return encrypted version of message
+function encrypt(message) {
+    return cryptoJs.AES.encrypt(message, process.env.SECRECT_KEY).toString();
 }
