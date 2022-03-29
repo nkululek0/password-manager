@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -24,7 +25,7 @@ const UserSchema = new mongoose.Schema({
 // login functionality where inserted passwords are verified before user is logged in
 UserSchema.statics.login = async function(email, password) {
     let user = await this.findOne({ email });
-
+    
     if(user) {
         let authUser = await bcrypt.compare(password, user.password);
         if(authUser) {

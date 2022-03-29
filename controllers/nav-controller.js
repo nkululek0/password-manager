@@ -32,21 +32,22 @@ module.exports.createPasswordAccount = async function(req, res) {
 }
 
 module.exports.updatePasswordAccount = async function(req, res) {
-    const { accountName, accountUsername, accountPassword } = req.body;
-    const urlAccountName = req.params.id;
+    // const { accountName, accountUsername, accountPassword } = req.body;
+    // const urlAccountName = req.params.id;
 
-    try {
-        // fetch user based on id
-        const user = User.findById(req.params.id);
-        // fetch account based on accountName
-        let accountIndex = user.accounts.findIndex(function(item) {
-            return item.accountName == urlAccountName;
-        }); 
-        console.log(accountIndex);
+    // try {
+    //     // fetch user based on id
+    //     const user = User.findById(req.params.id);
+    //     // fetch account based on accountName
+    //     let accountIndex = user.accounts.findIndex(function(item) {
+    //         return item.accountName == urlAccountName;
+    //     }); 
+    //     console.log(accountIndex);
 
-    } catch(err) {
-        res.json({ error: err });
-    }
+    // } catch(err) {
+    //     res.json({ error: err });
+    // }
+    console.log(req.params);
 }
 
 // find a value and return true if it exists
