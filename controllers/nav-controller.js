@@ -40,10 +40,10 @@ module.exports.updatePasswordAccount = async function(req, res) {
     try {
         // fetch user based on id
         const user = await User.findById(req.params.id);
-        
+
         // fetch password account based on accountName
         let accountIndex = user.accounts.findIndex(function(item) {
-            return item.accountName = urlAccountName;
+            return item.accountName === urlAccountName;
         }); 
         
         // updating of the password account details if provided
