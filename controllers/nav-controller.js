@@ -7,6 +7,7 @@ module.exports.createPasswordAccount = async function(req, res) {
     let { accountName, accountUsername, accountPassword } = req.body;
 
     try {
+        // fetch user based on id
         const user = await User.findById(req.params.id);
 
         // user does not exist error
@@ -31,23 +32,38 @@ module.exports.createPasswordAccount = async function(req, res) {
     }
 }
 
+// submit password account contents when updating account
 module.exports.updatePasswordAccount = async function(req, res) {
-    // const { accountName, accountUsername, accountPassword } = req.body;
-    // const urlAccountName = req.params.id;
+    const { accountName, accountUsername, accountPassword } = req.body;
+    const urlAccountName = req.params.accountName;
 
-    // try {
-    //     // fetch user based on id
-    //     const user = User.findById(req.params.id);
-    //     // fetch account based on accountName
-    //     let accountIndex = user.accounts.findIndex(function(item) {
-    //         return item.accountName == urlAccountName;
-    //     }); 
-    //     console.log(accountIndex);
+    try {
+        // fetch user based on id
+        const user = await User.findById(req.params.id);
+        
+        // fetch password account based on accountName
+        let accountIndex = user.accounts.findIndex(function(item) {
+            return item.accountName = urlAccountName;
+        }); 
+        
+        // updating of the password account details if provided
+        if(accountName) {
+            user.accounts[accountIndex].accountName = accountName;
+        }
+        if(accountUsername) {
+            user.accounts[accountIndex].accountUsername = accountUsername;
+        }
+        if(accountPassword) {
+            user.accounts[accountIndex].accountPassword = encrypt(accountPassword);
+        }
 
-    // } catch(err) {
-    //     res.json({ error: err });
-    // }
-    console.log(req.params);
+        await user.save();
+
+        console.log(`successfully updated password account details for user ${ user.email }`);
+        res.json({ user });
+    } catch(err) {
+        res.json({ error: err });
+    }
 }
 
 // find a value and return true if it exists
