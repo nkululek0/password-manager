@@ -1,7 +1,8 @@
 const User = require("../models/user");
 const cryptoJs = require("crypto-js");
 
-// PATCH request
+
+// PATCH requests
 // submits content when creating a password account
 module.exports.createPasswordAccount = async function(req, res) {
     let { accountName, accountUsername, accountPassword } = req.body;
@@ -9,14 +10,14 @@ module.exports.createPasswordAccount = async function(req, res) {
     try {
         // fetch user based on id
         const user = await User.findById(req.params.id);
-
+        
         // user does not exist error
         if(user === null) {
             return res.status(404).json({ error: "user not found"});
         }
         
         // password account already exists error
-        if(findValue(user.accounts, accountName)) {
+        if(indexValue(user.accounts, accountName) !== -1) {
             return res.status(400).json({ error: "account already exists, update instead?" });
         } else {
             accountPassword = encrypt(accountPassword);
@@ -24,7 +25,7 @@ module.exports.createPasswordAccount = async function(req, res) {
             user.accounts.push({ accountName, accountUsername, accountPassword });
             await user.save();
         }
-
+        
         console.log(`created account ${ accountName } for user ${ user.email }`);
         res.json({ user });
     } catch(err) {
@@ -35,16 +36,13 @@ module.exports.createPasswordAccount = async function(req, res) {
 // submit password account contents when updating account
 module.exports.updatePasswordAccount = async function(req, res) {
     const { accountName, accountUsername, accountPassword } = req.body;
-    const urlAccountName = req.params.accountName;
 
     try {
         // fetch user based on id
         const user = await User.findById(req.params.id);
-
+        
         // fetch password account based on accountName
-        let accountIndex = user.accounts.findIndex(function(item) {
-            return item.accountName === urlAccountName;
-        }); 
+        let accountIndex = indexValue(user.accounts, req.params.accountName);
         
         // updating of the password account details if provided
         if(accountName) {
@@ -58,17 +56,39 @@ module.exports.updatePasswordAccount = async function(req, res) {
         }
 
         await user.save();
-
+        
         console.log(`successfully updated password account details for user ${ user.email }`);
         res.json({ user });
     } catch(err) {
-        res.json({ error: err });
+        res.json({ error: err.message });
     }
 }
 
-// find a value and return true if it exists
-function findValue(arr, value) {
-    return arr.find(function(prop) { return prop.accountName === value });
+// GET requests
+// delete password account
+module.exports.deletePasswordAccount = async function(req, res) {
+    try {
+        const user = await User.findById(req.params.id);
+
+        //find the index of req.params.accountName
+        let accountIndex = indexValue(user.accounts, req.params.accountName);
+        
+        //remove object of password account based on previous index by setting it to ""
+        user.accounts[accountIndex] = ""; // creates a cast to object error
+
+        await user.save();
+
+        console.log(`successfully deleted password account for user ${ user.email }`);
+        res.json({ user });
+    } catch(err) {
+        res.json({ error: err.message });
+    }
+}
+
+
+// find the index and return it
+function indexValue(arr, value) {
+    return arr.findIndex(function(item) { return item.accountName === value });
 }
 
 // encrypt and return encrypted version of message
