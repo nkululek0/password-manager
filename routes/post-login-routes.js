@@ -2,14 +2,14 @@ const router = require("express").Router();
 const navController = require("../controllers/nav-controller.js");
 
 // PATCH requests
-router.patch("/users/:id", navController.createPasswordAccount);
-router.patch("/users/:id/:accountName", navController.updatePasswordAccount);
+router.patch("/create-password-account/users/:id", navController.createPasswordAccount);
+router.patch("/update-password-account/users/:id/:accountName", navController.updatePasswordAccount);
 
 // GET requests
-router.get("/users/:id/:accountName", navController.deletePasswordAccount);
-router.get("/users/logout", navController.logoutUser);
+router.get("/delete-password-account/users/:id/:accountName", navController.deletePasswordAccount);
+router.get("/logout/users", navController.logoutUser);
 
 // DELETE requests
-router.delete("/users/:id/:email", navController.deleteUserAccount);
+router.delete("/delete-user-account/users/:id/:email", navController.deleteUserAccount);
 
 module.exports = router;
