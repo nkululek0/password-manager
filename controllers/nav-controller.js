@@ -68,18 +68,29 @@ module.exports.updatePasswordAccount = async function(req, res) {
 // delete password account
 module.exports.deletePasswordAccount = async function(req, res) {
     try {
-        const user = await User.findById(req.params.id);
-
-        //find the index of req.params.accountName
-        let accountIndex = indexValue(user.accounts, req.params.accountName);
-        
-        //remove object of password account based on previous index by setting it to ""
-        user.accounts[accountIndex] = ""; // creates a cast to object error
-
-        await user.save();
+        // find user by id and delete specified password account
+        const user = await User.findOneAndUpdate(req.params.id, { $pull: { 
+                accounts: { 
+                    accountName: req.params.accountName 
+                }
+            }
+        });
 
         console.log(`successfully deleted password account for user ${ user.email }`);
         res.json({ user });
+    } catch(err) {
+        res.json({ error: err.message });
+    }
+}
+
+// delete user account
+module.exports.deleteUserAccount = async function(req, res) {
+    try {
+        // delete user based off of the id
+        await User.findByIdAndDelete(req.params.id);
+
+        console.log(`successfully deleted user ${ req.params.email }`);
+        res.redirect("/login");
     } catch(err) {
         res.json({ error: err.message });
     }
