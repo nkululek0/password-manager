@@ -83,6 +83,12 @@ module.exports.deletePasswordAccount = async function(req, res) {
     }
 }
 
+// logout user
+module.exports.logoutUser = function(req, res) {
+    res.cookie("login", "", { maxAge: 1 });
+    res.send("login page");
+}
+
 // delete user account
 module.exports.deleteUserAccount = async function(req, res) {
     try {
@@ -90,7 +96,9 @@ module.exports.deleteUserAccount = async function(req, res) {
         await User.findByIdAndDelete(req.params.id);
 
         console.log(`successfully deleted user ${ req.params.email }`);
-        res.redirect("/login");
+        // res.redirect("/login")
+        res.cookie("login", "", { maxAge: 1 });
+        res.send("login page");
     } catch(err) {
         res.json({ error: err.message });
     }

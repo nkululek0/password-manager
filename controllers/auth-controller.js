@@ -6,9 +6,6 @@ const bcrypt = require("bcrypt");
 // renders sign up page
 module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
 
-// renders login page
-module.exports.getLogin = function (req, res) { res.send("login page"); }
-
 
 // POST requests
 // submits content on sign up page

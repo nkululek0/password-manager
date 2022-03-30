@@ -2,7 +2,6 @@ const router = require("express").Router();
 const authController = require("../controllers/auth-controller.js");
 
 // GET requests
-router.get("/login", authController.getLogin);
 router.get("/sign-up", authController.getSignUp);
 
 // POST requests

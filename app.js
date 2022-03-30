@@ -17,8 +17,15 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .catch((err) => console.log(err));
 
 // app routes
+// default route that is called (the login page)
+app.get("/login", function(req, res) {
+    res.send("login page");
+});
+
+// routes for when the user has not logged in yet
 const preLoginRoutes = require("./routes/pre-login-routes.js");
 app.use("/api", preLoginRoutes);
 
+// routes for when user has logged in
 const postLoginRoutes = require("./routes/post-login-routes.js");
 app.use("/api", postLoginRoutes);
