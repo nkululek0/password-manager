@@ -18,7 +18,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // app routes
 // default route that is called (the login page)
-app.get("/login", function(req, res) {
+app.get("/api/login", function(req, res) {
     res.send("login page");
 });
 
