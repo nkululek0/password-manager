@@ -76,7 +76,7 @@ module.exports.deletePasswordAccount = async function(req, res) {
             }
         });
 
-        console.log(`successfully deleted password account for user ${ user.email }`);
+        console.log(`successfully deleted password account ${ req.params.accountName} for user ${ user.email }`);
         res.json({ user });
     } catch(err) {
         res.json({ error: err.message });
