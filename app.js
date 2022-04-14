@@ -16,10 +16,13 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then((result) => app.listen(4030))
 .catch((err) => console.log(err));
 
+// view engine
+app.set('view engine', 'ejs');
+
 // app routes
 // default route that is called (the login page)
 app.get("/api/login", function(req, res) {
-    res.send("login page");
+    res.render("login");
 });
 
 // routes for when the user has not logged in yet
