@@ -73,7 +73,7 @@ function loginErrors(err) {
     let errorMessages = { email: "", password: "" };
 
     // incorrect email error
-    if(err.message === "Incorrect user") {
+    if(err.message === "Incorrect email") {
         errorMessages.email = "Please enter valid email";
         return errorMessages;
     }
