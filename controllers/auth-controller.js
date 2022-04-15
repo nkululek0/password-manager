@@ -32,7 +32,7 @@ module.exports.postLogin = async function(req, res) {
         let token = createToken(user._id);
         res.cookie("login", token, { httpOnly: true, maxAge: maxAge * 1000 });
         console.log(`logged in user ${ user.email }`);
-        res.json({ user });
+        res.json({ user: user._id });
     } catch(err) {
         let errorMessages = loginErrors(err);
         console.log(errorMessages);
