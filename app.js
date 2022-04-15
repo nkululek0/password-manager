@@ -10,6 +10,7 @@ const app = express();
 app.use(express.static("public"));    
 app.use(express.json());
 app.use(cookieParser());
+const { authorise } = require("./middleware/authorise.js");
 
 // database connection
 const dbURI = process.env.DATABASE_URI;
@@ -22,7 +23,7 @@ app.set('view engine', 'ejs');
 
 // app routes
 // default route that is called (the home page)
-app.get('/', (req, res) => res.render('home'));
+app.get('/', authorise, (req, res) => res.render('home'));
 
 // routes for when the user has not logged in yet
 const preLoginRoutes = require("./routes/pre-login-routes.js");
