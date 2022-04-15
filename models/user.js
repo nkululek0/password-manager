@@ -6,19 +6,27 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true , "Please enter an email"],
-        lowercase: true,
-        unique: [isEmail, "Please enter vaild email"]
+        unique: true,
+        validate: [isEmail, "Please enter vaild email"],
+        lowercase: true
     },
     password: {
         type: String,
         required: [true, "Please enter password"],
-        minlength: [8, "Please enter a password with a minimum of 8 characters"]
+        minlength: [8, "Please enter password with minimum of 8 characters"]
     },
     accounts: [{
         accountName: String,
         accountUsername: String,
         accountPassword: String
     }]
+});
+
+// encrypts password before saving user to database
+UserSchema.pre("save", async function(next){
+    let salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 

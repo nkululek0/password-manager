@@ -1,6 +1,5 @@
 const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 
 // GET requests
 // renders sign up page
@@ -10,16 +9,15 @@ module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
 // POST requests
 // submits content on sign up page
 module.exports.postSignUp = async function(req, res) {
-    let { username, email, password } = req.body;
+    let { email, password } = req.body;
 
     try {
-        password = await encrypt(password);
-        const user = await User.create({ username, email, password });
+        const user = await User.create({ email, password });
 
         console.log(`successfully created user ${ user.email }`);
-        res.status(201).json({ user });
+        res.status(201).json({ user: user._id });
     } catch(err) {
-        const errorMessages = signUpErrors(err);
+        let errorMessages = signUpErrors(err);
         console.log(errorMessages);
         res.json({ errorMessages });
     }
@@ -36,21 +34,12 @@ module.exports.postLogin = async function(req, res) {
         console.log(`logged in user ${ user.email }`);
         res.json({ user });
     } catch(err) {
-        const errorMessages = loginErrors(err);
+        let errorMessages = loginErrors(err);
         console.log(errorMessages);
-        res.json({ err });
+        res.json({ errorMessages });
     }
 }
 
-// encrypts and returns encrypted version of message
-async function encrypt(message) {
-    try {
-        let salt = await bcrypt.genSalt();
-        return await bcrypt.hash(message, salt);
-    } catch(err) {
-        res.json({ error: err });
-    }
-}
 
 // jwt and cookie configuration
 const maxAge = 600;
@@ -60,9 +49,9 @@ function createToken(payload) {
 }
 
 
-// function that deals with errors for postSignUp
+// hanlds errors for postSignUp
 function signUpErrors(err) {
-    let errorMessages = { username: "", email: "", password: "" };
+    let errorMessages = { email: "", password: "" };
 
     // duplicate email error
     if(err.code === 11000) {
