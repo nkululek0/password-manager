@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 
 // GET requests
 // renders sign up page
-module.exports.getSignUp = function(req, res) { res.send("sign up page"); }
-
+module.exports.getSignUp = function(req, res) { res.send("sign up page") };
+module.exports.getLogin = function(req, res) { res.render("login") };
 
 // POST requests
 // submits content on sign up page

@@ -3,6 +3,7 @@ const authController = require("../controllers/auth-controller.js");
 
 // GET requests
 router.get("/sign-up", authController.getSignUp);
+router.get("/login", authController.getLogin);
 
 // POST requests
 router.post("/login/users", authController.postLogin);
