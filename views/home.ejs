@@ -13,4 +13,35 @@
         <h3 class="page-heading">Safe Store</h3>
         <p class="username">logged in as <%= user.email %></p>
     </header>
+    <section class="passwords-view">
+        <% if(user.accounts.length) {%>
+            <% user.accounts.forEach(function(account) { %>
+                <div class="password-card">
+                    <div class="password-card-initial"> <%= account.accountName %> </div>
+                    <div class="password-card-details">
+                        <p class="password-card-name"> <%= account.accountName %> </p>
+                        <button class="password-card-btn">Password</button>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else {%>
+            <div class="no-passwords-div">
+                <p class="no-passwords-text">No Passwords to be Shown</p>
+            </div>
+        <% } %>
+    </section>
+    <section class="operations-view">
+        <input type="text" class="operation-search" placeholder="search">
+        <button class="operation-create">Create</button>
+        <button class="operation-delete">Delete</button>
+        <a href="/api/logout/users" class="operation-log-out">log out</a>
+    </section>
+
+<script>
+    const createButton = document.querySelector(".operation-create");
+
+    createButton.addEventListener("click", function() {
+        console.log("pop up form lauched");
+    });
+</script>
 <%- include("partials/footer") %>
