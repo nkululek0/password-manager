@@ -21,6 +21,21 @@
                     <div class="password-card-details">
                         <p class="password-card-name"> <%= account.accountName %> </p>
                         <button class="password-card-btn">Password</button>
+                        <div class="modal">
+                            <div class="close-modal"><p>&times;</p></div>
+                            <form action="">
+                                <div class="form-fields">
+                                    <div class="form-attribute">
+                                        <label for="account-name">Account Name:</label>
+                                        <input type="text" name="account-name" id="">
+                                    </div>
+                                    <%- include("partials/form-fields") %>
+                                </div>
+                                <div class="submit-button-div">
+                                    <button>Save</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             <% }) %>
