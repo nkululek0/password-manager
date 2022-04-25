@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styling/global.css">
     <link rel="stylesheet" href="/styling/home.css">
+    <script defer src="/scripts/modal.js"></script>
     <title>Safe Store</title>
 </head>
 <body>
@@ -22,21 +23,6 @@
                     <div class="password-card-details">
                         <p class="password-card-name"> <%= account.accountName %> </p>
                         <button class="password-card-btn">Password</button>
-                        <div class="modal">
-                            <div class="close-modal"><p>&times;</p></div>
-                            <form action="">
-                                <div class="form-fields">
-                                    <div class="form-attribute">
-                                        <label for="account-name">Account Name:</label>
-                                        <input type="text" name="account-name" id="">
-                                    </div>
-                                    <%- include("partials/form-fields") %>
-                                </div>
-                                <div class="submit-button-div">
-                                    <button>Save</button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             <% }) %>
@@ -48,15 +34,35 @@
     </section>
     <section class="operations-view">
         <input type="text" class="operation-search" placeholder="search">
-        <button class="operation-create">Create</button>
+        <div class="password-creation-div">
+            <button class="operation-create open-modal">Create</button>
+            <div class="modal">
+                <div class="close-modal"><p>&times;</p></div>
+                <form action="">
+                    <div class="form-fields">
+                        <div class="form-attribute">
+                            <label for="account-name">Account Name:</label>
+                            <input type="text" name="account-name" id="">
+                        </div>
+                        <%- include("partials/form-fields") %>
+                    </div>
+                    <div class="submit-button-div">
+                        <button class="create-password">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div id="overlay"></div>
+        </div>
         <button class="operation-delete">Delete</button>
         <a href="/api/logout/users" class="operation-log-out">log out</a>
     </section>
 
 <script>
-    const createButton = document.querySelector(".operation-create");
+    const createButton = document.querySelector(".create-password");
 
-    createButton.addEventListener("click", function() {
+    createButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        
         console.log("pop up form lauched");
     });
 </script>
