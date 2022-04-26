@@ -42,7 +42,7 @@
                     <div class="form-fields">
                         <div class="form-attribute">
                             <label for="account-name">Account Name:</label>
-                            <input type="text" name="account-name" id="">
+                            <input type="text" name="account_name">
                         </div>
                         <%- include("partials/form-fields") %>
                     </div>
@@ -60,10 +60,44 @@
 <script>
     const createButton = document.querySelector(".create-password");
 
-    createButton.addEventListener("click", function(event) {
+    let createPasswordForm = document.querySelector(".modal > form");
+    
+    createButton.addEventListener("click", async function(event) {
         event.preventDefault();
-        
-        console.log("pop up form lauched");
+
+        let createAccountName = createPasswordForm.account_name;
+        let createEmail = createPasswordForm.email;
+        let createPassword = createPasswordForm.password;
+
+        if(!createAccountName.value) {
+            console.log("no account name provided");
+        }
+        if(!createEmail.value) {
+            console.log("no email/username provided");
+        }
+        if(!createPassword.value) {
+            console.log("no password provided");
+        }
+
+        try {
+            let response = await fetch(`/api/create-password-account/users/${res.locals.user}`, {
+                method: "POST",
+                body: JSON.stringify({ email, password }),
+                headers: { "Content-Type": "application/json" }
+            });
+
+            let data = await response.json();
+
+            // if(data.errorMessages) {
+            //     renderErrors(data.errorMessages);
+            // }
+
+            if(data.user) {
+                alert("successfully created user!");
+            }
+        } catch(err) {
+            console.log(err);
+        }
     });
 </script>
 <%- include("partials/footer") %>
