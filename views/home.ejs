@@ -13,7 +13,7 @@
     
     <header>
         <h3 class="page-heading">Safe Store</h3>
-        <p class="username">logged in as <%= user.email %></p>
+        <p>logged in as <span class="username"><%= user.email %></span></p>
     </header>
     <section class="passwords-view">
         <% if(user.accounts.length) {%>
@@ -58,31 +58,35 @@
     </section>
 
 <script>
+    const username = document.querySelector(".username").textContent;
+
     const createButton = document.querySelector(".create-password");
 
     let createPasswordForm = document.querySelector(".modal > form");
+
     
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
 
-        let createAccountName = createPasswordForm.account_name;
-        let createEmail = createPasswordForm.email;
-        let createPassword = createPasswordForm.password;
+        let accountName = createPasswordForm.account_name;
+        let accountUsername = createPasswordForm.email;
+        let accountPassword = createPasswordForm.password;
 
-        if(!createAccountName.value) {
+        if(!accountName.value) {
             console.log("no account name provided");
+            // throw Error("account name");
         }
-        if(!createEmail.value) {
+        if(!accountUsername.value) {
             console.log("no email/username provided");
         }
-        if(!createPassword.value) {
+        if(!accountPassword.value) {
             console.log("no password provided");
         }
-
+        
         try {
-            let response = await fetch(`/api/create-password-account/users/${res.locals.user}`, {
+            let response = await fetch(`/api/create-password-account/users/${ username }`, {
                 method: "POST",
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ accountName, accountUsername, accountPassword }),
                 headers: { "Content-Type": "application/json" }
             });
 
