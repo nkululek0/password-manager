@@ -9,11 +9,11 @@ module.exports.createPasswordAccount = async function(req, res) {
 
     try {
         // fetch user based on id
-        const user = await User.findById(req.params.id);
+        const user = await User.findOne({ email: req.params.email });
         
         // user does not exist error
         if(user === null) {
-            return res.status(404).json({ error: "user not found"});
+            return res.status(404).json({ error: "user not found" });
         }
         
         // password account already exists error
