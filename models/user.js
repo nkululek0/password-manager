@@ -22,13 +22,6 @@ const UserSchema = new mongoose.Schema({
     }]
 });
 
-// encrypts password before saving user to database
-UserSchema.pre("save", async function(next){
-    let salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-});
-
 
 // login functionality where inserted passwords are verified before user is logged in
 UserSchema.statics.login = async function(email, password) {
