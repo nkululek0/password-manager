@@ -19,7 +19,7 @@
         <% if(user.accounts.length) {%>
             <% user.accounts.forEach(function(account) { %>
                 <div class="password-card">
-                    <div class="password-card-initial"> <%= account.accountName %> </div>
+                    <div class="password-card-initial"> <%= account.accountName[0] %> </div>
                     <div class="password-card-details">
                         <p class="password-card-name"> <%= account.accountName %> </p>
                         <button class="password-card-btn">Password</button>
@@ -41,8 +41,9 @@
                 <form action="">
                     <div class="form-fields">
                         <div class="form-attribute">
-                            <label for="account-name">Account Name:</label>
-                            <input type="text" name="account_name">
+                            <label for="account_name">Account Name:</label>
+                                <input type="text" name="account_name">
+                                <div class="account-name-error"></div>
                         </div>
                         <%- include("partials/form-fields") %>
                     </div>
@@ -64,37 +65,50 @@
 
     let createPasswordForm = document.querySelector(".modal > form");
 
+    let accountNameError = document.querySelector(".account-name-error");
+    let accountUsernameError = document.querySelector(".email-error");
+    let accountPasswordError = document.querySelector(".password-error");
     
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
 
+        //reset error fields to nothing
+        accountNameError.textContent = "";
+        accountUsernameError.textContent = "";
+        accountPasswordError.textContent = "";
+
+        //getting error fields
         let accountName = createPasswordForm.account_name;
         let accountUsername = createPasswordForm.email;
         let accountPassword = createPasswordForm.password;
 
         if(!accountName.value) {
-            console.log("no account name provided");
-            // throw Error("account name");
+            accountNameError.textContent = "Please enter account name";
+            return;
         }
         if(!accountUsername.value) {
-            console.log("no email/username provided");
+            accountUsernameError.textContent = "no email/username provided";
+            return;
         }
         if(!accountPassword.value) {
-            console.log("no password provided");
+            accountPasswordError.textContent = "no password provided";
+            return;
         }
         
         try {
             let response = await fetch(`/api/create-password-account/users/${ username }`, {
-                method: "POST",
+                method: "PATCH",
                 body: JSON.stringify({ accountName, accountUsername, accountPassword }),
                 headers: { "Content-Type": "application/json" }
             });
+            
 
             let data = await response.json();
 
-            // if(data.errorMessages) {
-            //     renderErrors(data.errorMessages);
-            // }
+            if(data.error) {
+                console.log(data);
+                console.log({accountName, accountUsername, accountPassword});
+            }
 
             if(data.user) {
                 alert("successfully created user!");
