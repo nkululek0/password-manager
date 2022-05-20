@@ -12,6 +12,9 @@ module.exports.postSignUp = async function(req, res) {
     let { email, password } = req.body;
 
     try {
+        let salt = await bcrypt.genSalt();
+        password = await bcrypt.hash(password, salt);
+        
         const user = await User.create({ email, password });
 
         console.log(`successfully created user ${ user.email }`);
