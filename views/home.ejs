@@ -15,6 +15,7 @@
         <h3 class="page-heading">Safe Store</h3>
         <p>logged in as <span class="username"><%= user.email %></span></p>
     </header>
+
     <section class="passwords-view">
         <% if(user.accounts.length) {%>
             <% user.accounts.forEach(function(account) { %>
@@ -32,6 +33,7 @@
             </div>
         <% } %>
     </section>
+
     <section class="operations-view">
         <input type="text" class="operation-search" placeholder="search">
         <div class="password-creation-div">
@@ -48,11 +50,18 @@
                         <%- include("partials/form-fields") %>
                     </div>
                     <div class="submit-button-div">
-                        <button class="create-password">Save</button>
+                        <button class="create-password open-result-modal">Save</button>
                     </div>
                 </form>
             </div>
             <div id="overlay"></div>
+            <div class="result-modal">
+                <p class="result-text"></p>
+                <div class="options">
+                    <button class="result-yes close-result-modal">Yes</button><button class="result-ok close-result-modal">Ok</button><button class="result-no close-result-modal">No</button>
+                </div>
+            </div>
+            <div id="result-overlay"></div>
         </div>
         <button class="operation-delete">Delete</button>
         <a href="/api/logout/users" class="operation-log-out">log out</a>
@@ -65,10 +74,13 @@
 
     let createPasswordForm = document.querySelector(".modal > form");
 
+    
     let accountNameError = document.querySelector(".account-name-error");
     let accountUsernameError = document.querySelector(".email-error");
     let accountPasswordError = document.querySelector(".password-error");
     
+    let resultModalText = document.querySelector(".result-text");
+
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
 
@@ -77,7 +89,10 @@
         accountUsernameError.textContent = "";
         accountPasswordError.textContent = "";
 
-        //getting error fields
+        //default text within result modal
+        resultModalText.textContent = "Loading...";
+
+        //getting form fields
         let accountName = createPasswordForm.account_name.value;
         let accountUsername = createPasswordForm.email.value;
         let accountPassword = createPasswordForm.password.value;
@@ -101,21 +116,24 @@
                 body: JSON.stringify({ accountName, accountUsername, accountPassword }),
                 headers: { "Content-Type": "application/json" }
             });
-            
 
             let data = await response.json();
 
             if(data.error) {
+                if(data.error.includes("account already exists, update instead?")){
+                    resultModalText.textContent = "account already exists, update instead?";
+                }
                 console.log(data);
-                console.log({accountName, accountUsername, accountPassword});
             }
 
             if(data.user) {
-                alert("successfully created user!");
+                resultModalText.textContent = "successfully created user!";
+                // code to refresh content on page
             }
         } catch(err) {
             console.log(err);
         }
     });
 </script>
+
 <%- include("partials/footer") %>
