@@ -78,19 +78,19 @@
         accountPasswordError.textContent = "";
 
         //getting error fields
-        let accountName = createPasswordForm.account_name;
-        let accountUsername = createPasswordForm.email;
-        let accountPassword = createPasswordForm.password;
+        let accountName = createPasswordForm.account_name.value;
+        let accountUsername = createPasswordForm.email.value;
+        let accountPassword = createPasswordForm.password.value;
 
-        if(!accountName.value) {
+        if(!accountName) {
             accountNameError.textContent = "Please enter account name";
             return;
         }
-        if(!accountUsername.value) {
+        if(!accountUsername) {
             accountUsernameError.textContent = "no email/username provided";
             return;
         }
-        if(!accountPassword.value) {
+        if(!accountPassword) {
             accountPasswordError.textContent = "no password provided";
             return;
         }
