@@ -39,7 +39,12 @@ module.exports.updatePasswordAccount = async function(req, res) {
 
     try {
         // find user based on email
-        const user = await User.find({ email: req.params.id });
+        const user = await User.findOne({ email: req.params.email });
+
+        // user does not exist error
+        if(user === null) {
+            return res.status(404).json({ error: "user not found" });
+        }
         
         // find password account index based on accountName
         let accountIndex = indexValue(user.accounts, req.params.accountName);
