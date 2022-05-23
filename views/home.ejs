@@ -68,12 +68,12 @@
     </section>
 
 <script>
+    //value used for fetch request when performing API related operations
     const username = document.querySelector(".username").textContent;
 
     const createButton = document.querySelector(".create-password");
 
     let createPasswordForm = document.querySelector(".modal > form");
-
     
     let accountNameError = document.querySelector(".account-name-error");
     let accountUsernameError = document.querySelector(".email-error");
@@ -81,8 +81,17 @@
     
     let resultModalText = document.querySelector(".result-text");
 
+    //values for all the buttons within the resultModal
+    const [...resultModalBtns] = document.querySelectorAll(".close-result-modal");
+
+    //create password account functionality
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
+    
+        //makes all result-modalbuttons display none
+        resultModalBtns.map(function(item) {
+            item.classList.remove("active");
+        });
 
         //reset error fields to nothing
         accountNameError.textContent = "";
@@ -119,16 +128,47 @@
 
             let data = await response.json();
 
+            if(data.user) {
+                resultModalText.textContent = "successfully created user!";
+                resultModalBtns[1].classList.add("active");
+                // code to refresh content on page
+            }
+
             if(data.error) {
                 if(data.error.includes("account already exists, update instead?")){
                     resultModalText.textContent = "account already exists, update instead?";
+                    resultModalBtns[0].classList.add("active");
+                    resultModalBtns[2].classList.add("active");
                 }
                 console.log(data);
             }
+        } catch(err) {
+            console.log(err);
+        }
+    });
+
+    
+    //update the password account when the result-yes button is clicked
+    resultModalBtns[0].addEventListener("click", async function() {
+        let accountName = createPasswordForm.account_name.value;
+        let accountUsername = createPasswordForm.email.value;
+        let accountPassword = createPasswordForm.password.value;
+
+        try {
+            let response = await fetch(`api/update-password-account/users/${ username }/${ accountName }`, {
+                method: "PATCH",
+                body: JSON.stringify({ accountName, accountUsername, accountPassword }),
+                headers: { "Content-Type": "application/json" }
+            });
+
+            let data = await response.json();
 
             if(data.user) {
-                resultModalText.textContent = "successfully created user!";
-                // code to refresh content on page
+                console.log("successfully updated user!");
+            }
+
+            if(data.error) {
+                console.log(data);
             }
         } catch(err) {
             console.log(err);
