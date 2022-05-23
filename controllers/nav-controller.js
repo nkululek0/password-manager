@@ -8,7 +8,7 @@ module.exports.createPasswordAccount = async function(req, res) {
     let { accountName, accountUsername, accountPassword } = req.body;
 
     try {
-        // fetch user based on id
+        // find user based on email
         const user = await User.findOne({ email: req.params.email });
         
         // user does not exist error
@@ -27,7 +27,7 @@ module.exports.createPasswordAccount = async function(req, res) {
         }
         
         console.log(`created account ${ accountName } for user ${ user.email }`);
-        res.json({ user });
+        res.json({ user: user._id });
     } catch(err) {
         res.json({ error: err.message });
     }
@@ -38,10 +38,10 @@ module.exports.updatePasswordAccount = async function(req, res) {
     const { accountName, accountUsername, accountPassword } = req.body;
 
     try {
-        // fetch user based on id
-        const user = await User.findById(req.params.id);
+        // find user based on email
+        const user = await User.find({ email: req.params.id });
         
-        // fetch password account based on accountName
+        // find password account index based on accountName
         let accountIndex = indexValue(user.accounts, req.params.accountName);
         
         // updating of the password account details if provided
@@ -58,7 +58,7 @@ module.exports.updatePasswordAccount = async function(req, res) {
         await user.save();
         
         console.log(`successfully updated password account details for user ${ user.email }`);
-        res.json({ user });
+        res.json({ user: user._id });
     } catch(err) {
         res.json({ error: err.message });
     }
@@ -77,7 +77,7 @@ module.exports.deletePasswordAccount = async function(req, res) {
         });
 
         console.log(`successfully deleted password account ${ req.params.accountName} for user ${ user.email }`);
-        res.json({ user });
+        res.json({ user: user._id });
     } catch(err) {
         res.json({ error: err.message });
     }
