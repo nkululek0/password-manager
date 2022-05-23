@@ -97,9 +97,12 @@
         gap: 1.5rem;
     }
         .options > button {
-            
+            display: none;
             width: 5rem;
             height: 2rem;
+        }
+        .options > button.active {
+            display: block;
         }
 
 #result-overlay {
