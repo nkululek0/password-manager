@@ -3,7 +3,7 @@ const navController = require("../controllers/nav-controller.js");
 
 // PATCH requests
 router.patch("/create-password-account/users/:email", navController.createPasswordAccount);
-router.patch("/update-password-account/users/:id/:accountName", navController.updatePasswordAccount);
+router.patch("/update-password-account/users/:email/:accountName", navController.updatePasswordAccount);
 
 // GET requests
 router.get("/delete-password-account/users/:id/:accountName", navController.deletePasswordAccount);
