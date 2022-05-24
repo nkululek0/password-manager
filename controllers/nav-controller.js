@@ -111,7 +111,7 @@ module.exports.deleteUserAccount = async function(req, res) {
 
 // find the index and return it
 function indexValue(arr, value) {
-    return arr.findIndex(function(item) { return item.accountName === value });
+    return arr.findIndex(function(item) { return item.accountName.toLowerCase() === value.toLowerCase() });
 }
 
 // encrypt and return encrypted version of message
