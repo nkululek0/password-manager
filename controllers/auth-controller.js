@@ -31,6 +31,8 @@ module.exports.postSignUp = async function(req, res) {
 module.exports.postLogin = async function(req, res) {
     let { email, password } = req.body;
 
+    email = email.toLowerCase();
+
     try {
         const user = await User.login(email, password);
         let token = createToken(user._id);
