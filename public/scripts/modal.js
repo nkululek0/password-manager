@@ -4,7 +4,10 @@ const closeModalBtn = document.querySelector(".close-modal");
 
 // selects result of create account modal
 const openResultBtn = document.querySelector(".open-result-modal");
-const [...closeResultModalBtn] = document.querySelectorAll(".close-result-modal");
+const closeResultOkBtn = document.querySelector(".result-ok");
+const closeResultNoBtn = document.querySelector(".result-no");
+
+const closeResultModalBtns = [closeResultOkBtn, closeResultNoBtn];
 
 // selects overlay for all modals
 const overlay = document.querySelector("#overlay");
@@ -24,7 +27,7 @@ closeModalBtn.addEventListener("click", function() {
     const modal = document.querySelector(".modal");
     closeModal(modal);
 });
-closeResultModalBtn.map(function(item) {
+closeResultModalBtns.map(function(item) {
     const resultModal = document.querySelector(".result-modal");
     item.addEventListener("click", function() {
         closeResultModal(resultModal);

@@ -131,8 +131,6 @@
             if(data.user) {
                 resultModalText.textContent = "successfully created user!";
                 resultModalBtns[1].classList.add("active");
-                // code to refresh content on page
-                location.assign("/");
             }
 
             if(data.error) {
@@ -146,6 +144,9 @@
         } catch(err) {
             console.log(err);
         }
+
+        //removal of active class from buttons so that it's reset when making new requests
+        activeClassRemoval();
     });
 
     
@@ -154,6 +155,9 @@
         let accountName = createPasswordForm.account_name.value;
         let accountUsername = createPasswordForm.email.value;
         let accountPassword = createPasswordForm.password.value;
+
+        //default text within result modal
+        resultModalText.textContent = "Loading...";
 
         try {
             let response = await fetch(`api/update-password-account/users/${ username }/${ accountName }`, {
@@ -165,7 +169,7 @@
             let data = await response.json();
 
             if(data.user) {
-                console.log("successfully updated user!");
+                console.log("update successful!");
             }
 
             if(data.error) {
@@ -175,6 +179,18 @@
             console.log(err);
         }
     });
+
+    //reload page when password account is created and user clicks "ok"
+    resultModalBtns[1].addEventListener("click", function() {
+        location.assign("/");
+    });
+
+    //removal of active class from buttons so that it's reset when making new requests
+    function activeClassRemoval() {
+        resultModalBtns.map(function(item) {
+            item.classList.remove("active");
+        });
+    }
 </script>
 
 <%- include("partials/footer") %>
