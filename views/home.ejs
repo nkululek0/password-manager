@@ -84,6 +84,11 @@
     //values for all the buttons within the resultModal
     const [...resultModalBtns] = document.querySelectorAll(".close-result-modal");
 
+    //reload page when password account is created and user clicks "ok"
+    resultModalBtns[1].addEventListener("click", function() {
+        location.assign("/");
+    });
+    
     //create password account functionality
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
@@ -147,13 +152,18 @@
 
     
     //update the password account when the result-yes button is clicked
-    resultModalBtns[0].addEventListener("click", async function() {
+    resultModalBtns[0].addEventListener("click", function() {
         let accountName = createPasswordForm.account_name.value;
         let accountUsername = createPasswordForm.email.value;
         let accountPassword = createPasswordForm.password.value;
 
-        //default text within result modal
-        resultModalText.textContent = "Loading...";
+        updatePasswordAccount(accountName, accountUsername, accountPassword);
+    });
+
+    //update password account function
+    async function updatePasswordAccount(accountName, accountUsername, accountPassword) {
+         //default text within result modal
+         resultModalText.textContent = "Loading...";
 
         //makes all result-modalbuttons display none
         activeClassRemoval();
@@ -178,12 +188,7 @@
         } catch(err) {
             console.log(err);
         }
-    });
-
-    //reload page when password account is created and user clicks "ok"
-    resultModalBtns[1].addEventListener("click", function() {
-        location.assign("/");
-    });
+    }
 
     //removal of active class from buttons so that it's reset when making new requests
     function activeClassRemoval() {
