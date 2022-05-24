@@ -88,18 +88,17 @@
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
     
-        //makes all result-modalbuttons display none
-        resultModalBtns.map(function(item) {
-            item.classList.remove("active");
-        });
-
+        
         //reset error fields to nothing
         accountNameError.textContent = "";
         accountUsernameError.textContent = "";
         accountPasswordError.textContent = "";
-
+        
         //default text within result modal
         resultModalText.textContent = "Loading...";
+        
+        //makes all result-modalbuttons display none
+        activeClassRemoval();
 
         //getting form fields
         let accountName = createPasswordForm.account_name.value;
@@ -129,7 +128,7 @@
             let data = await response.json();
 
             if(data.user) {
-                resultModalText.textContent = "successfully created user!";
+                resultModalText.textContent = "success!";
                 resultModalBtns[1].classList.add("active");
             }
 
@@ -144,9 +143,6 @@
         } catch(err) {
             console.log(err);
         }
-
-        //removal of active class from buttons so that it's reset when making new requests
-        activeClassRemoval();
     });
 
     
@@ -159,6 +155,9 @@
         //default text within result modal
         resultModalText.textContent = "Loading...";
 
+        //makes all result-modalbuttons display none
+        activeClassRemoval();
+
         try {
             let response = await fetch(`api/update-password-account/users/${ username }/${ accountName }`, {
                 method: "PATCH",
@@ -169,7 +168,8 @@
             let data = await response.json();
 
             if(data.user) {
-                console.log("update successful!");
+                resultModalText.textContent = "update success!";
+                resultModalBtns[1].classList.add("active");
             }
 
             if(data.error) {
