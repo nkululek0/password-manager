@@ -24,6 +24,39 @@
                     <div class="password-card-details">
                         <p class="password-card-name"> <%= account.accountName %> </p>
                         <button class="password-card-btn">Password</button>
+                        <div class="password-account-modal">
+                            <div class="close-password-account-modal"><p>&times;</p></div>
+                            <div class="password-account-main">
+                                <div class="password-account-name">
+                                    <div class="password-account-inital">
+                                        <p class="initial"> <%= account.accountName[0] %> </p>
+                                    </div>
+                                    <div class="password-account-fullname">
+                                        <p class="fullname"> <%= account.accountName %> </p>
+                                    </div>
+                                </div>
+                                <div class="password-account-details">
+                                    <form action="">
+                                        <div class="form-fields">
+                                            <div class="form-attribute">
+                                                <label for="username">Username:</label>
+                                                    <input type="text" name="username" id="" value="<%= account.accountUsername %>">                
+                                            </div>
+                                            <div class="form-attribute">
+                                                <label for="password">Password:</label>
+                                                    <input type="password" name="password" id="" value="<%= account.accountPassword %>">
+                                            </div>
+                                        </div>
+                                        <div class="copy-password">copy password</div>
+                                    </form>
+                                    <div class="password-account-modal-button-options">
+                                        <button class="modify password-account-button">Modify</button>
+                                        <button class="save password-account-button">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="password-account-overlay"></div>
                     </div>
                 </div>
             <% }) %>
