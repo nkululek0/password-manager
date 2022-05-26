@@ -70,6 +70,9 @@
     opacity: 1;
     pointer-events: all;
 }
+/* end of styling for modal form when user creates account */
+
+
 
 /* styling of modal for result when user attempts to create account */
 .result-modal {
@@ -121,3 +124,105 @@
     opacity: 1;
     pointer-events: all;
 }
+/* end of styling of modal for result when user attempts to create account */
+
+
+
+/* styling of password account modal for when user clicks password button */
+.password-account-modal {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 500ms ease-in-out;
+    border: 1px solid black;
+    width: 45%;
+    border-radius: 5px;
+    z-index: 11;
+    background-color: #ffff;
+}
+.password-account-modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+    .close-password-account-modal {
+        display: flex;
+        flex-direction: row-reverse;
+        padding: 0 0.4rem;
+    }
+        .close-password-account-modal > p {
+            font-size: 1.7rem;
+            cursor: pointer;
+        }
+
+    .password-account-main {
+        display: flex;
+    }
+        .password-account-name {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30%;
+            background-color: aqua;
+        }
+            .password-account-inital {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: aqua;
+                height: 80%;
+                width: 100%;
+            }
+                .password-account-fullname {
+                    display: flex;
+                    background-color: #fff;
+                    width: 100%;
+                    height: 20%;
+                    justify-content: center;
+                    padding: .8rem 0;                
+                }
+
+        .password-account-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 70%;
+            padding: 0 1.4rem;
+        }   
+            .password-account-details > form {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                gap: .3rem;
+            }
+                .password-account-details > form > .form-fields {
+                        padding: 0;
+                    }
+            .password-account-modal-button-options {
+                display: flex;
+                justify-content: space-between;
+                gap: 2rem;
+                margin: 1rem 0 .7rem;
+            }
+                .password-account-button {
+                    width: 5rem;
+                    height: 2rem;
+                  }
+#password-account-overlay {
+    position: fixed;
+    transition: 550ms ease-in-out;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+}
+#password-account-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+/* end of styling of password account modal for when user clicks password button */
