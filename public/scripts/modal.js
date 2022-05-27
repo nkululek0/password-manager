@@ -10,8 +10,8 @@ const closeResultNoBtn = document.querySelector(".result-no");
 const closeResultModalBtns = [closeResultOkBtn, closeResultNoBtn];
 
 // selects password account modal
-const openPasswordAccountBtn = document.querySelector(".password-card-btn");
-const closePasswordAccountBtn = document.querySelector(".close-password-account-modal");
+const [...openPasswordAccountBtns] = document.querySelectorAll(".password-card-btn");
+const [...closePasswordAccountBtns] = document.querySelectorAll(".close-password-account-modal");
 
 // selects overlay for all modals
 const overlay = document.querySelector("#overlay");
@@ -27,10 +27,13 @@ openResultBtn.addEventListener("click", function(event) {
     const resultModal = document.querySelector(".result-modal");
     openResultModal(resultModal);
 });
-openPasswordAccountBtn.addEventListener("click", function() {
-    const passwordAccountModal = document.querySelector(".password-account-modal");
-    openPasswordAccountModal(passwordAccountModal);
-});
+openPasswordAccountBtns.map(function(item) {
+    item.addEventListener("click", function() {
+        const buttonIndex = openPasswordAccountBtns.indexOf(item);
+        const passwordAccountModal = document.querySelectorAll(".password-account-modal")[buttonIndex];
+        openPasswordAccountModal(passwordAccountModal);
+    });  
+})
 
 closeModalBtn.addEventListener("click", function() {
     const modal = document.querySelector(".modal");
@@ -42,9 +45,12 @@ closeResultModalBtns.map(function(item) {
         closeResultModal(resultModal);
     });
 });
-closePasswordAccountBtn.addEventListener("click", function() {
-    const passwordAccountModal = document.querySelector(".password-account-modal");
-    closePasswordAccountModal(passwordAccountModal);
+closePasswordAccountBtns.map(function(item) {
+    item.addEventListener("click", function() {
+        const buttonIndex = closePasswordAccountBtns.indexOf(item);
+        const passwordAccountModal = document.querySelectorAll(".password-account-modal")[buttonIndex];
+        closePasswordAccountModal(passwordAccountModal);
+    });
 });
 
 function openModal(modal) {
