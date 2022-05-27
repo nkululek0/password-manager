@@ -9,7 +9,7 @@
     border-radius: 5px;
     z-index: 10;
     background-color: #ffff;
-    width: 40%;
+    width: 45%;
     display: flex;
     flex-direction: column;
 }
@@ -26,6 +26,7 @@
             cursor: pointer;
         }
 
+    /* for every form there is on the application this styling will apply */
     .form-fields {
         display: flex;
         flex-direction: column;
@@ -43,6 +44,7 @@
                 height: 1.5rem;
                 padding: 1rem 0.5rem;
             }
+    /* end of form styling */
 
         .submit-button-div {
             display: flex;
@@ -137,7 +139,7 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     transition: 500ms ease-in-out;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 45%;
     border-radius: 5px;
     z-index: 11;
@@ -222,6 +224,43 @@
     pointer-events: none;
 }
 #password-account-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.password-result-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 500ms ease-in-out;
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    z-index: 11;
+    background-color: #ffff;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.5rem;
+}
+.password-result-modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+#password-result-overlay {
+    position: fixed;
+    transition: 550ms ease-in-out;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+}
+#password-result-overlay.active {
     opacity: 1;
     pointer-events: all;
 }
