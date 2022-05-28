@@ -22,7 +22,7 @@ const resultOverlay = document.querySelector("#result-overlay");
 const passwordAccountOverlay = document.querySelector("#password-account-overlay");
 const passwordResultOverlay = document.querySelector("#password-result-overlay");
 
-console.log(passwordResultOverlay);
+
 
 openModalBtn.addEventListener("click", function() {
     const modal = document.querySelector(".modal");
