@@ -13,10 +13,16 @@ const closeResultModalBtns = [closeResultOkBtn, closeResultNoBtn];
 const [...openPasswordAccountBtns] = document.querySelectorAll(".password-card-btn");
 const [...closePasswordAccountBtns] = document.querySelectorAll(".close-password-account-modal");
 
+// selects result of password account modal
+const [...openPasswordResultBtns] = document.querySelectorAll(".open-password-result-modal");
+
 // selects overlay for all modals
 const overlay = document.querySelector("#overlay");
 const resultOverlay = document.querySelector("#result-overlay");
 const passwordAccountOverlay = document.querySelector("#password-account-overlay");
+const passwordResultOverlay = document.querySelector("#password-result-overlay");
+
+console.log(passwordResultOverlay);
 
 openModalBtn.addEventListener("click", function() {
     const modal = document.querySelector(".modal");
@@ -33,7 +39,14 @@ openPasswordAccountBtns.map(function(item) {
         const passwordAccountModal = document.querySelectorAll(".password-account-modal")[buttonIndex];
         openPasswordAccountModal(passwordAccountModal);
     });  
-})
+});
+openPasswordResultBtns.map(function(item) {
+    item.addEventListener("click", function() {
+        const buttonIndex = openPasswordResultBtns.indexOf(item);
+        const passwordResultModal = document.querySelectorAll(".password-result-modal")[buttonIndex];
+        openPasswordResultModal(passwordResultModal);
+    });
+});
 
 closeModalBtn.addEventListener("click", function() {
     const modal = document.querySelector(".modal");
@@ -64,6 +77,10 @@ function openResultModal(resultModal) {
 function openPasswordAccountModal(passwordAccountModal) {
     passwordAccountModal.classList.add("active");
     passwordAccountOverlay.classList.add("active");   
+}
+function openPasswordResultModal(passwordResultModal) {
+    passwordResultModal.classList.add("active");
+    passwordResultOverlay.classList.add("active");
 }
 
 function closeModal(modal) {
