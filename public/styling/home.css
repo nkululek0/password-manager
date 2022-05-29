@@ -1,3 +1,71 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    margin: 1rem;
+    border: 1px solid #FF7A00;
+    border-radius: 4px;
+}
+
+.home-main {
+    display: flex;
+    height: 78vh;
+    margin: 1rem;
+}
+    .passwords-view {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        width: 75%;
+        height: 100%;
+        padding: 1rem;
+        border: 1px solid #FF7A00;
+        border-radius: 4px;
+    }
+        .password-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 7rem;
+            height: 7rem;
+            padding: .5rem;
+            border: 1px solid #9C9C9C;
+            border-radius: 4px;
+        }
+            .password-card-initial {
+                display: flex;
+                align-content: center;
+                align-items: center;
+                justify-content: space-around;
+            }
+            .password-card-details {
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                align-items: center;
+            }
+
+    .operations-view {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 23%;
+        padding: 1rem;
+        margin-left: 2rem;
+        border: 1px solid #FF7A00;
+        border-radius: 4px;
+    }
+        .operation-search {
+            width: 100%;
+            height: 60%;
+            padding: 0 .5rem;
+            border-radius: 4px;
+        }
+        .operation-log-out {
+            display: flex;
+            justify-content: center;
+          }
+
 /* styling for modal form when user creates account */
 .modal {
     position: fixed;
@@ -264,3 +332,12 @@
     pointer-events: all;
 }
 /* end of styling of password account modal for when user clicks password button */
+
+
+
+footer {
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}

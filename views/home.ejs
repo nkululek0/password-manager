@@ -16,98 +16,102 @@
         <p>logged in as <span class="username"><%= user.email %></span></p>
     </header>
 
-    <section class="passwords-view">
-        <% if(user.accounts.length) {%>
-            <% user.accounts.forEach(function(account) { %>
-                <div class="password-card">
-                    <div class="password-card-initial">
-                        <p> <%= account.accountName[0] %> </p>
-                    </div>
-                    <div class="password-card-details">
-                        <p class="password-card-name"> <%= account.accountName %> </p>
-                        <button class="password-card-btn">Password</button>
-                        <div class="password-account-modal">
-                            <div class="close-password-account-modal"><p>&times;</p></div>
-                            <div class="password-account-main">
-                                <div class="password-account-name">
-                                    <div class="password-account-inital">
-                                        <p class="initial"> <%= account.accountName[0] %> </p>
-                                    </div>
-                                    <div class="password-account-fullname">
-                                        <p class="fullname"> <%= account.accountName %> </p>
-                                    </div>
-                                </div>
-                                <div class="password-account-details">
-                                    <form action="">
-                                        <div class="form-fields">
-                                            <div class="form-attribute">
-                                                <label for="username">Username:</label>
-                                                    <input type="text" name="username" id="" value="<%= account.accountUsername %>">                
-                                            </div>
-                                            <div class="form-attribute">
-                                                <label for="password">Password:</label>
-                                                    <input type="password" name="password" id="" value="<%= account.accountPassword %>">
-                                            </div>
+    <div class="home-main">
+        <section class="passwords-view">
+            <% if(user.accounts.length) {%>
+                <% user.accounts.forEach(function(account) { %>
+                    <div class="password-card">
+                        <div class="password-card-initial">
+                            <p> <%= account.accountName[0] %> </p>
+                        </div>
+                        <div class="password-card-details">
+                            <p class="password-card-name"> <%= account.accountName %> </p>
+                            <button class="password-card-btn">Password</button>
+                            <div class="password-account-modal">
+                                <div class="close-password-account-modal"><p>&times;</p></div>
+                                <div class="password-account-main">
+                                    <div class="password-account-name">
+                                        <div class="password-account-inital">
+                                            <p class="initial"> <%= account.accountName[0] %> </p>
                                         </div>
-                                        <div class="copy-password">copy password</div>
-                                    </form>
-                                    <div class="password-account-modal-button-options">
-                                        <button class="modify password-account-button">Modify</button>
-                                        <button class="save password-account-button open-password-result-modal">Save</button>
-                                        <div class="password-result-modal">
-                                            <p class="password-result-text">update success!</p>
-                                            <div class="options">
-                                                <button class="result-ok close-password-result-modal">Ok</button>
-                                            </div>
+                                        <div class="password-account-fullname">
+                                            <p class="fullname"> <%= account.accountName %> </p>
                                         </div>
-                                        <div id="password-result-overlay"></div>
+                                    </div>
+                                    <div class="password-account-details">
+                                        <form action="">
+                                            <div class="form-fields">
+                                                <div class="form-attribute">
+                                                    <label for="username">Username:</label>
+                                                        <input type="text" name="username" id="" value="<%= account.accountUsername %>">                
+                                                </div>
+                                                <div class="form-attribute">
+                                                    <label for="password">Password:</label>
+                                                        <input type="password" name="password" id="" value="<%= account.accountPassword %>">
+                                                </div>
+                                            </div>
+                                            <div class="copy-password">copy password</div>
+                                        </form>
+                                        <div class="password-account-modal-button-options">
+                                            <button class="modify password-account-button">Modify</button>
+                                            <button class="save password-account-button open-password-result-modal">Save</button>
+                                            <div class="password-result-modal">
+                                                <p class="password-result-text">update success!</p>
+                                                <div class="options">
+                                                    <button class="result-ok close-password-result-modal">Ok</button>
+                                                </div>
+                                            </div>
+                                            <div id="password-result-overlay"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="password-account-overlay"></div>
                         </div>
-                        <div id="password-account-overlay"></div>
                     </div>
+                <% }) %>
+            <% } else {%>
+                <div class="no-passwords-div">
+                    <p class="no-passwords-text">No Passwords to be Shown</p>
                 </div>
-            <% }) %>
-        <% } else {%>
-            <div class="no-passwords-div">
-                <p class="no-passwords-text">No Passwords to be Shown</p>
-            </div>
-        <% } %>
-    </section>
-
-    <section class="operations-view">
-        <input type="text" class="operation-search" placeholder="search">
-        <div class="password-creation-div">
-            <button class="operation-create open-modal">Create</button>
-            <div class="modal">
-                <div class="close-modal"><p>&times;</p></div>
-                <form action="">
-                    <div class="form-fields">
-                        <div class="form-attribute">
-                            <label for="account_name">Account Name:</label>
-                                <input type="text" name="account_name">
-                                <div class="account-name-error"></div>
+            <% } %>
+        </section>
+    
+        <section class="operations-view">
+            <div class="main-page-operations">
+                <input type="text" class="operation-search" placeholder="search">
+                <div class="password-creation-div">
+                    <button class="operation-create open-modal">Create</button>
+                    <div class="modal">
+                        <div class="close-modal"><p>&times;</p></div>
+                        <form action="">
+                            <div class="form-fields">
+                                <div class="form-attribute">
+                                    <label for="account_name">Account Name:</label>
+                                        <input type="text" name="account_name">
+                                        <div class="account-name-error"></div>
+                                </div>
+                                <%- include("partials/form-fields") %>
+                            </div>
+                            <div class="submit-button-div">
+                                <button class="create-password open-result-modal">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="overlay"></div>
+                    <div class="result-modal">
+                        <p class="result-text"></p>
+                        <div class="options">
+                            <button class="result-yes close-result-modal">Yes</button><button class="result-ok close-result-modal">Ok</button><button class="result-no close-result-modal">No</button>
                         </div>
-                        <%- include("partials/form-fields") %>
                     </div>
-                    <div class="submit-button-div">
-                        <button class="create-password open-result-modal">Save</button>
-                    </div>
-                </form>
-            </div>
-            <div id="overlay"></div>
-            <div class="result-modal">
-                <p class="result-text"></p>
-                <div class="options">
-                    <button class="result-yes close-result-modal">Yes</button><button class="result-ok close-result-modal">Ok</button><button class="result-no close-result-modal">No</button>
+                    <div id="result-overlay"></div>
                 </div>
+                <button class="operation-delete">Delete</button>
             </div>
-            <div id="result-overlay"></div>
-        </div>
-        <button class="operation-delete">Delete</button>
-        <a href="/api/logout/users" class="operation-log-out">log out</a>
-    </section>
+            <a href="/api/logout/users" class="operation-log-out">log out</a>
+        </section>
+    </div>
 
 <script>
     //value used for fetch request when performing API related operations
