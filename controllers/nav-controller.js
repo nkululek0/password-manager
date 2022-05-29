@@ -50,13 +50,13 @@ module.exports.updatePasswordAccount = async function(req, res) {
         let accountIndex = indexValue(user.accounts, req.params.accountName);
         
         // updating of the password account details if provided
-        if(accountName) {
+        if(accountName !== user.accounts[accountIndex].accountName) {
             user.accounts[accountIndex].accountName = accountName;
         }
-        if(accountUsername) {
+        if(accountUsername !== user.accounts[accountIndex].accountUsername) {
             user.accounts[accountIndex].accountUsername = accountUsername;
         }
-        if(accountPassword) {
+        if(accountPassword !== user.accounts[accountIndex].accountPassword) {
             user.accounts[accountIndex].accountPassword = encrypt(accountPassword);
         }
 
