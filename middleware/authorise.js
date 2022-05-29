@@ -11,7 +11,7 @@ function authorise(req, res, next) {
                 res.redirect("/api/login");
             } else {
                 console.log(decodedToken);
-                let user = await User.findOne({ id: decodedToken.payload });
+                let user = await User.findById(decodedToken.payload);
                 res.locals.user = user;
                 next();
             }
