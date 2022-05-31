@@ -3,4 +3,4 @@ const searchAccountController = require("../controllers/search-account-controlle
 
 router.get("/search-account/users/:email/:accountName", searchAccountController.searchAccount);
 
-module.exports = { router }
+module.exports =  router; 
