@@ -80,6 +80,9 @@
         <section class="operations-view">
             <div class="main-page-operations">
                 <input type="text" class="operation-search" placeholder="search">
+                <div class="search-result-holder">
+                    <ul></ul>
+                </div>
                 <div class="password-creation-div">
                     <button class="operation-create open-modal">Create</button>
                     <div class="modal">
@@ -141,6 +144,12 @@
 // end of section for password account modal //
 
 
+
+// sectionn for searching password accounts
+    const searchInput = document.querySelector(".operation-search");
+
+    const searchResults = document.querySelector(".search-result-holder");
+// end of section for searching password accounts
 
     //reload page when password account is created and user clicks "ok"
     resultModalBtns[1].addEventListener("click", function() {
@@ -250,6 +259,31 @@
                 passwordResultText[buttonIndex].textContent = data.error;
             }
         });
+    });
+
+
+    
+    // search for password accounts based on user input
+    searchInput.addEventListener("keyup", async function() {
+        let accountName = searchInput.value;
+
+        try {
+            let response = await fetch(`/api/search-account/users/${ username }`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ accountName })
+            });
+
+            let data = await response.json();
+
+            console.log(data);
+            if(data.accounts) {
+            } else if(data.error) {
+                console.error(data.error);
+            }
+        } catch(err) {
+            console.error(err);
+        }
     });
 
 
