@@ -32,3 +32,7 @@ app.use("/api", preLoginRoutes);
 // routes for when user has logged in
 const postLoginRoutes = require("./routes/post-login-routes.js");
 app.use("/api", authorise, postLoginRoutes);
+
+// route for search functionality
+const searchRoute = require("./routes/search-account-route.js");
+app.use("/api", searchRoute);
