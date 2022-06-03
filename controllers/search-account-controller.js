@@ -20,7 +20,7 @@ module.exports.searchAccount = async function(req, res) {
             }
         });
 
-        res.json(accounts);
+        res.json(accounts.slice(0, 10));
     } catch(err) {
         res.json({ error: err.message });
     }
