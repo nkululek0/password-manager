@@ -25,10 +25,6 @@ app.set('view engine', 'ejs');
 // default route that is called (the home page)
 app.get('/', authorise, (req, res) => res.render('home'));
 
-// route for search functionality
-const searchRoute = require("./routes/search-account-route.js");
-app.use("/api", searchRoute);
-
 // routes for when the user has not logged in yet
 const preLoginRoutes = require("./routes/pre-login-routes.js");
 app.use("/api", preLoginRoutes);
