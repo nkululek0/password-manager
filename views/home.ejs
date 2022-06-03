@@ -19,7 +19,7 @@
     <div class="home-main">
         <section class="passwords-view">
             <% if(user.accounts.length) {%>
-                <% user.accounts.forEach(function(account) { %>
+                <% user.accounts.map(function(account) { %>
                     <div class="password-card">
                         <div class="password-card-initial">
                             <p> <%= account.accountName[0] %> </p>
@@ -80,9 +80,6 @@
         <section class="operations-view">
             <div class="main-page-operations">
                 <input type="text" class="operation-search" placeholder="search">
-                <div class="search-result-holder">
-                    <ul></ul>
-                </div>
                 <div class="password-creation-div">
                     <button class="operation-create open-modal">Create</button>
                     <div class="modal">
@@ -148,7 +145,8 @@
 // sectionn for searching password accounts
     const searchInput = document.querySelector(".operation-search");
 
-    const searchResults = document.querySelector(".search-result-holder");
+    let [...accountPasswordCards] = document.querySelectorAll(".password-card");
+    let [...accountPasswordCardNames] = document.querySelectorAll(".password-card-name");
 // end of section for searching password accounts
 
     //reload page when password account is created and user clicks "ok"
@@ -264,25 +262,25 @@
 
     
     // search for password accounts based on user input
-    searchInput.addEventListener("keyup", async function() {
+    searchInput.addEventListener("keyup", function() {
+        accountPasswordCards.map(function(item) {
+            item.classList.remove("hide");
+        });
+
+        // console.log(accountPasswordCards[0].childNodes[3].childNodes[1]);
         let accountName = searchInput.value;
 
-        try {
-            let response = await fetch(`/api/search-account/users/${ username }`, {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ accountName })
+        let match = accountName.match(/\s*/);
+        let regexp = new RegExp(`^${ accountName }.*`, "i");
+
+        if(match[0] !== accountName) {
+            accountPasswordCards.filter(function(item, index) {
+                if(!regexp.test(accountPasswordCardNames[index].textContent.trim())) {
+                    return accountPasswordCards[index];
+                }
+            }).map(function(item) {
+                item.classList.add("hide");
             });
-
-            let data = await response.json();
-
-            console.log(data);
-            if(data.accounts) {
-            } else if(data.error) {
-                console.error(data.error);
-            }
-        } catch(err) {
-            console.error(err);
         }
     });
 
