@@ -81,7 +81,7 @@
         <section class="operations-view">
             <div class="main-page-operations">
                 <input type="text" class="operation-search" placeholder="search">
-                <div class="password-creation-div">
+                <div class="operation-creation-div">
                     <button class="operation-create open-modal">Create</button>
                     <div class="modal">
                         <div class="close-modal"><p>&times;</p></div>
@@ -108,7 +108,26 @@
                     </div>
                     <div id="result-overlay"></div>
                 </div>
-                <button class="operation-delete">Delete</button>
+                <div class="operation-deletion-div">
+                    <button class="operation-delete">Delete</button>
+                    <div class="delete-options">
+                        <div class="delete-options-main">
+                            <div class="delete-main-account">
+                                <input type="radio" name="" id="">
+                                <p>MAIN ACCOUNT</p>
+                            </div>
+                            <hr class="delete-options-seperator"/>
+                            <div class="delete-password-account">
+                                <p class="downwards-arrow">&darr;</p>
+                                <p>Password Account</p>
+                                <div class="delete-click-option">
+                                    <div class="delete-password-accounts-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="delete-cancel">cancel</p>
+                    </div>
+                </div>
             </div>
             <a href="/api/logout/users" class="operation-log-out">log out</a>
         </section>
@@ -122,6 +141,7 @@
     const [...accountPasswordCards] = document.querySelectorAll(".password-card");
     const [...accountPasswordCardNames] = document.querySelectorAll(".password-card-name");
 
+    const openPasswordModal = document.querySelector(".open-modal");
     const createButton = document.querySelector(".create-password");
 
     let createPasswordForm = document.querySelector(".modal > form");
@@ -147,11 +167,25 @@
 
 
 
-// sectionn for searching password accounts
+// section for searching password accounts
     const searchInput = document.querySelector(".operation-search");    
     const noSearchResult = document.querySelector(".no-search-result");
 // end of section for searching password accounts
 
+// sections for deleting main or password accounts
+    const deleteBtn = document.querySelector(".operation-delete");
+    const deleteOptions = document.querySelector(".delete-options");
+
+// end of section for delete main or password accounts
+
+// logout button
+    const logOutBtn = document.querySelector(".operation-log-out");
+// end of logout button
+
+// cancel delete
+    const cancelDelete = document.querySelector(".delete-cancel");
+// end of cancel delete
+    
     //reload page when password account is created and user clicks "ok"
     resultModalBtns[1].addEventListener("click", function() {
         location.assign("/");
@@ -290,6 +324,23 @@
                 noSearchResult.classList.add("active");
             }
         }
+    });
+
+
+
+    //delete button functionality
+    deleteBtn.addEventListener("click", function() {
+        openPasswordModal.classList.add("hide");
+        logOutBtn.classList.add("hide");
+        deleteOptions.classList.add("active");
+    });
+
+
+    //cancel delete functionality
+    cancelDelete.addEventListener("click", function() {
+        openPasswordModal.classList.remove("hide");
+        logOutBtn.classList.remove("hide");
+        deleteOptions.classList.remove("active");
     });
 
 
