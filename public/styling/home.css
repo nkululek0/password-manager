@@ -68,6 +68,15 @@ header {
             padding: 0 .5rem;
             border-radius: 4px;
         }
+            .no-search-result {
+                display: none;
+            }
+            .no-search-result.active {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+            }
         .operation-log-out {
             display: flex;
             justify-content: center;
