@@ -18,6 +18,7 @@
 
     <div class="home-main">
         <section class="passwords-view">
+            <div class="no-search-result">no result found</div>
             <% if(user.accounts.length) {%>
                 <% user.accounts.map(function(account) { %>
                     <div class="password-card">
@@ -117,6 +118,10 @@
     //value used for fetch request when performing API related operations
     const username = document.querySelector(".username").textContent;
 
+    const passwordsView = document.querySelector(".passwords-view");
+    const [...accountPasswordCards] = document.querySelectorAll(".password-card");
+    const [...accountPasswordCardNames] = document.querySelectorAll(".password-card-name");
+
     const createButton = document.querySelector(".create-password");
 
     let createPasswordForm = document.querySelector(".modal > form");
@@ -143,10 +148,8 @@
 
 
 // sectionn for searching password accounts
-    const searchInput = document.querySelector(".operation-search");
-
-    let [...accountPasswordCards] = document.querySelectorAll(".password-card");
-    let [...accountPasswordCardNames] = document.querySelectorAll(".password-card-name");
+    const searchInput = document.querySelector(".operation-search");    
+    const noSearchResult = document.querySelector(".no-search-result");
 // end of section for searching password accounts
 
     //reload page when password account is created and user clicks "ok"
@@ -263,24 +266,29 @@
     
     // search for password accounts based on user input
     searchInput.addEventListener("keyup", function() {
+        //removes the active class so the no search result text won't show
+        noSearchResult.classList.remove("active");
+
         accountPasswordCards.map(function(item) {
             item.classList.remove("hide");
         });
 
-        // console.log(accountPasswordCards[0].childNodes[3].childNodes[1]);
         let accountName = searchInput.value;
 
         let match = accountName.match(/\s*/);
         let regexp = new RegExp(`^${ accountName }.*`, "i");
 
         if(match[0] !== accountName) {
-            accountPasswordCards.filter(function(item, index) {
+            let result = accountPasswordCards.filter(function(item, index) {
                 if(!regexp.test(accountPasswordCardNames[index].textContent.trim())) {
                     return accountPasswordCards[index];
                 }
             }).map(function(item) {
                 item.classList.add("hide");
             });
+            if(result.length === accountPasswordCards.length) {
+                noSearchResult.classList.add("active");
+            }
         }
     });
 
