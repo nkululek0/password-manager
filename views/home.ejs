@@ -276,24 +276,22 @@
     });
 
     //save updated password account on password account modal when save button is clicked
-    savePasswordAccountBtns.map(function(item) {
+    savePasswordAccountBtns.map(function(item, index) {
         let passwordResultText = document.querySelectorAll(".password-result-text");        
 
         item.addEventListener("click", function() {
-            let buttonIndex = savePasswordAccountBtns.indexOf(item);
+            passwordResultText[index].textContent = "Loading...";
+            passwordResultModalBtns[index].addEventListener("click", function() { location.assign("/"); });
 
-            passwordResultText[buttonIndex].textContent = "Loading...";
-            passwordResultModalBtns[buttonIndex].addEventListener("click", function() { location.assign("/"); });
-
-            let accountName = document.querySelectorAll(".fullname")[buttonIndex].textContent.trim();
-            let accountUsername = passwordAccountForm[buttonIndex].username.value;
-            let accountPassword = passwordAccountForm[buttonIndex].password.value;
+            let accountName = document.querySelectorAll(".fullname")[index].textContent.trim();
+            let accountUsername = passwordAccountForm[index].username.value;
+            let accountPassword = passwordAccountForm[index].password.value;
 
             if(updatePasswordAccount(accountName, accountUsername, accountPassword)) {
-                passwordResultText[buttonIndex].textContent = "update success!";
-                passwordResultModalBtns[buttonIndex].classList.add("active");
+                passwordResultText[index].textContent = "update success!";
+                passwordResultModalBtns[index].classList.add("active");
             } else if(data.error) {
-                passwordResultText[buttonIndex].textContent = data.error;
+                passwordResultText[index].textContent = data.error;
             }
         });
     });
