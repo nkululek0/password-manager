@@ -111,18 +111,18 @@
                 <div class="operation-deletion-div">
                     <button class="operation-delete">Delete</button>
                     <div class="delete-options">
-                        <div class="delete-options-main">
+                        <div class="delete-option-main">
                             <div class="delete-main-account">
                                 <input type="radio" name="" id="">
                                 <p>Main Account</p>
                             </div>
                             <hr class="delete-options-seperator"/>
-                            <div class="delete-password-account">
-                                <p class="downwards-arrow">&darr;</p>
-                                <p>Password Account</p>
-                                <div class="delete-click-option">
-                                    <div class="delete-password-accounts-list"></div>
+                            <div class="delete-option-password">
+                                <div class="delete-password-account">
+                                    <p class="downwards-arrow">&darr;</p>
+                                    <p>Password Account</p>
                                 </div>
+                                <div class="delete-password-accounts-list"></div>
                             </div>
                         </div>
                         <p class="delete-cancel">cancel</p>
@@ -175,16 +175,18 @@
 // sections for deleting main or password accounts
     const deleteBtn = document.querySelector(".operation-delete");
     const deleteOptions = document.querySelector(".delete-options");
-
+    const deletePasswordAccounts = document.querySelector(".delete-option-password");
+    let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
 // end of section for delete main or password accounts
+
+// cancel delete
+    const cancelDelete = document.querySelector(".delete-cancel");
+// end of cancel delete
 
 // logout button
     const logOutBtn = document.querySelector(".operation-log-out");
 // end of logout button
 
-// cancel delete
-    const cancelDelete = document.querySelector(".delete-cancel");
-// end of cancel delete
     
     //reload page when password account is created and user clicks "ok"
     resultModalBtns[1].addEventListener("click", function() {
@@ -336,15 +338,36 @@
     });
 
 
+    // delete password accounts
+    deletePasswordAccounts.addEventListener("click", function() {
+        deletePasswordAccountsList.textContent = "";
+
+        let [...allPasswordAccounts] = document.querySelectorAll(".fullname");
+        
+        allPasswordAccounts.map(function(item) {
+            let accountName = document.createElement("p");
+            let horizontalLine = document.createElement("hr");
+
+            accountName.textContent = item.textContent;
+
+            accountName.classList.add("delete-account-name");
+
+            deletePasswordAccountsList.appendChild(accountName);
+            deletePasswordAccountsList.appendChild(horizontalLine);
+        });
+    });
+
+
     //cancel delete functionality
     cancelDelete.addEventListener("click", function() {
         openPasswordModal.classList.remove("hide");
         logOutBtn.classList.remove("hide");
         deleteOptions.classList.remove("active");
+        deletePasswordAccountsList.textContent = "";
     });
 
 
-
+    
     //update password account function
     async function updatePasswordAccount(accountName, accountUsername, accountPassword) {
         try {
