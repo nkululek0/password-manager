@@ -135,7 +135,7 @@
 
 <script>
     //value used for fetch request when performing API related operations
-    const username = document.querySelector(".username").textContent;
+    const username = document.querySelector(".username").textContent.trim();
 
     const passwordsView = document.querySelector(".passwords-view");
     const [...accountPasswordCards] = document.querySelectorAll(".password-card");
@@ -175,7 +175,7 @@
 // sections for deleting main or password accounts
     const deleteBtn = document.querySelector(".operation-delete");
     const deleteOptions = document.querySelector(".delete-options");
-    const deletePasswordAccounts = document.querySelector(".delete-option-password");
+    const deletePasswordAccountSection = document.querySelector(".delete-option-password");
     let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
 // end of section for delete main or password accounts
 
@@ -339,11 +339,11 @@
 
 
     // delete password accounts
-    deletePasswordAccounts.addEventListener("click", function() {
+    deletePasswordAccountSection.addEventListener("click", function() {
         deletePasswordAccountsList.textContent = "";
 
         let [...allPasswordAccounts] = document.querySelectorAll(".fullname");
-        
+
         allPasswordAccounts.map(function(item) {
             let accountName = document.createElement("p");
             let horizontalLine = document.createElement("hr");
@@ -351,6 +351,10 @@
             accountName.textContent = item.textContent;
 
             accountName.classList.add("delete-account-name");
+
+            accountName.addEventListener("click", function() {
+                deletePasswordAccount(username, accountName.textContent.trim());
+            });
 
             deletePasswordAccountsList.appendChild(accountName);
             deletePasswordAccountsList.appendChild(horizontalLine);
@@ -389,6 +393,26 @@
             }
         } catch(err) {
             console.log(err);
+        }
+    }
+
+    // delete password account
+    async function deletePasswordAccount(email, accountName) {
+        try {
+            let response = await fetch(`/api/delete-password-account/users/${ email }/${ accountName }`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            let data = await response.json();
+
+            if(data.user) {
+                alert(`deleted password account ${ accountName }`);
+            } else if(data.error) {
+                alert(data.error);
+            }
+        } catch(err) {
+            console.error(err);
         }
     }
 
