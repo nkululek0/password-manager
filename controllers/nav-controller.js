@@ -73,25 +73,19 @@ module.exports.updatePasswordAccount = async function(req, res) {
 // delete password account
 module.exports.deletePasswordAccount = async function(req, res) {
     try {
-        // find user by id and delete specified password account
-        const user = await User.findOneAndUpdate(req.params.id, { $pull: { 
+        // find user by email and delete specified password account
+        const user = await User.findOneAndUpdate({ email: req.params.email }, { $pull: { 
                 accounts: { 
                     accountName: req.params.accountName 
                 }
             }
         });
 
-        console.log(`successfully deleted password account ${ req.params.accountName} for user ${ user.email }`);
+        console.log(`successfully deleted password account ${ req.params.accountName} for user ${ req.params.email }`);
         res.json({ user: user._id });
     } catch(err) {
         res.json({ error: err.message });
     }
-}
-
-// logout user
-module.exports.logoutUser = function(req, res) {
-    res.cookie("login", "", { maxAge: 1 });
-    res.redirect("/api/login");
 }
 
 // delete user account
@@ -108,6 +102,11 @@ module.exports.deleteUserAccount = async function(req, res) {
     }
 }
 
+// logout user
+module.exports.logoutUser = function(req, res) {
+    res.cookie("login", "", { maxAge: 1 });
+    res.redirect("/api/login");
+}
 
 // find the index and return it
 function indexValue(arr, value) {
