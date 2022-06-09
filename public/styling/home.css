@@ -90,19 +90,26 @@ header {
                 justify-content: space-between;
                 gap: 1rem;
             }
-                .delete-options-main {
+                .delete-option-main {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     gap: 1rem;
                 }
-                    .delete-password-account, .delete-main-account {
+                    .delete-main-account, .delete-option-password, .delete-password-account {
                         display: flex;
                         gap: .5rem;
                     }
                         .delete-options-seperator {
                             width: 6rem;
                             height: .2rem;
+                        }
+
+                    .delete-option-password {
+                        flex-direction: column;
+                    }
+                        .delete-account-name:hover {
+                            cursor: pointer;
                         }
                 .delete-cancel:hover {
                     cursor: pointer;
