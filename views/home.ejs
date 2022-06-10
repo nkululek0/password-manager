@@ -103,7 +103,9 @@
                     <div class="result-modal">
                         <p class="result-text"></p>
                         <div class="options">
-                            <button class="result-yes close-result-modal">Yes</button><button class="result-ok close-result-modal">Ok</button><button class="result-no close-result-modal">No</button>
+                            <button class="result-yes close-result-modal">Yes</button>
+                            <button class="result-ok close-result-modal">Ok</button>
+                            <button class="result-no close-result-modal">No</button>
                         </div>
                     </div>
                     <div id="result-overlay"></div>
@@ -124,6 +126,15 @@
                                 </div>
                                 <div class="delete-password-accounts-list"></div>
                             </div>
+                            <div class="delete-result-modal">
+                                <p class="delete-result-text"></p>
+                                <div class="options">
+                                    <button class="delete-yes">Yes</button>
+                                    <button class="delete-ok">Ok</button>
+                                    <button class="delete-no">No</button>
+                                </div>
+                            </div>
+                            <div id="delete-result-overlay"></div>
                         </div>
                         <p class="delete-cancel">cancel</p>
                     </div>
@@ -175,6 +186,7 @@
 // sections for deleting main or password accounts
     const deleteBtn = document.querySelector(".operation-delete");
     const deleteOptions = document.querySelector(".delete-options");
+    let deleteResultText = document.querySelector(".delete-result-text");
     const deletePasswordAccountSection = document.querySelector(".delete-option-password");
     let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
 // end of section for delete main or password accounts
@@ -338,8 +350,28 @@
 
     // delete password accounts
     deletePasswordAccountSection.addEventListener("click", function() {
+        // empties delete password account list
         deletePasswordAccountsList.textContent = "";
 
+        // sets the text of the modal to loading
+        deleteResultText.textContent = "Loading...";
+
+        // all of the buttons within the delete modal
+        let allModalDeleteBtns = [
+            document.querySelector(".delete-yes"), 
+            document.querySelector(".delete-ok"), 
+            deleteBtnNo = document.querySelector(".delete-no")
+        ];
+
+        
+        // makes the delete buttons yes and no visible
+        allModalDeleteBtns.map(function(item, index) {
+            if(index !== 1) {
+                item.classList.add("active");
+            }
+        });
+
+        // gets all the password account names
         let [...allPasswordAccounts] = document.querySelectorAll(".fullname");
 
         allPasswordAccounts.map(function(item) {
@@ -350,12 +382,10 @@
 
             accountName.classList.add("delete-account-name");
 
-            accountName.addEventListener("click", function() {
-                deletePasswordAccount(username, accountName.textContent.trim());
-            });
-
             deletePasswordAccountsList.appendChild(accountName);
             deletePasswordAccountsList.appendChild(horizontalLine);
+            
+            
         });
     });
 
