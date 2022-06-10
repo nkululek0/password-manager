@@ -1,21 +1,27 @@
-// selects create account modal
+// selects buttons for create account modal
 const openModalBtn = document.querySelector(".open-modal");
 const closeModalBtn = document.querySelector(".close-modal");
 
-// selects result of create account modal
+// selects buttons for result of create account modal
 const openResultBtn = document.querySelector(".open-result-modal");
 const closeResultModalBtns = [document.querySelector(".result-ok"), document.querySelector(".result-no")];
 
-// selects password account modal
+// selects buttons for password account modal
 const [...openPasswordAccountBtns] = document.querySelectorAll(".password-card-btn");
 const [...closePasswordAccountBtns] = document.querySelectorAll(".close-password-account-modal");
 
-// selects result of password account modal
+// selects buttons for result of password account modal
 const [...openPasswordResultBtns] = document.querySelectorAll(".open-password-result-modal");
+
+// selects buttons for result of delete modal
+const openDeleteResultBtnMain = document.querySelector(".delete-main-account");
+const openDeleteResultBtnOther = document.querySelector(".delete-option-password");
+const closeDeleteResultBtns = [document.querySelector(".delete-ok"), document.querySelector(".delete-no")];
 
 // selects overlay for all modals
 const overlay = document.querySelector("#overlay");
 const resultOverlay = document.querySelector("#result-overlay");
+const deleteResultOverlay = document.querySelector("#delete-result-overlay");
 
 
 
@@ -50,6 +56,24 @@ openPasswordResultBtns.map(function(item, index) {
     });
 });
 
+// opens delete result modal when main account is clicked
+openDeleteResultBtnMain.addEventListener("click", function() {
+    const deleteResultModal = document.querySelector(".delete-result-modal");
+    openDeleteResultModal(deleteResultModal);
+});
+
+// opens delete result modal when an individual account name is clicked from delete options
+openDeleteResultBtnOther.addEventListener("click", function() {
+    const [...allPasswordAccounts] = document.querySelectorAll(".delete-account-name");
+
+    // allPasswordAccounts.map(function(item) {
+    //     item.addEventListener("click", function() {
+    //         const deleteResultModal = document.querySelector(".delete-result-modal");
+    //         openDeleteResultModal(deleteResultModal);
+    //     });
+    // });
+});
+
 
 
 // close button for modal of creating password account
@@ -75,6 +99,16 @@ closePasswordAccountBtns.map(function(item, index) {
     });
 });
 
+// close buttons for delete result modal
+closeDeleteResultBtns.map(function(item) {
+    item.addEventListener("click", function() {
+        const deleteResultModal = document.querySelector(".delete-result-modal");
+        closeDeleteResultModal(deleteResultModal);
+    })
+});
+
+
+
 function openModal(modal) {
     modal.classList.add("active");
     overlay.classList.add("active");    
@@ -91,6 +125,12 @@ function openPasswordResultModal(passwordResultModal, passwordResultOverlay) {
     passwordResultModal.classList.add("active");
     passwordResultOverlay.classList.add("active");
 }
+function openDeleteResultModal(deleteResultModal) {
+    deleteResultModal.classList.add("active");
+    deleteResultOverlay.classList.add("active");
+}
+
+
 
 function closeModal(modal) {
     modal.classList.remove("active");
@@ -103,4 +143,8 @@ function closeResultModal(resultModal) {
 function closePasswordAccountModal(passwordAccountModal, passwordAccountOverlay) {
     passwordAccountModal.classList.remove("active");
     passwordAccountOverlay.classList.remove("active");
+}
+function closeDeleteResultModal(deleteResultModal) {
+    deleteResultModal.classList.remove("active");
+    deleteResultOverlay.classList.remove("active");
 }
