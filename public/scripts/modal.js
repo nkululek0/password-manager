@@ -66,12 +66,12 @@ openDeleteResultBtnMain.addEventListener("click", function() {
 openDeleteResultBtnOther.addEventListener("click", function() {
     const [...allPasswordAccounts] = document.querySelectorAll(".delete-account-name");
 
-    // allPasswordAccounts.map(function(item) {
-    //     item.addEventListener("click", function() {
-    //         const deleteResultModal = document.querySelector(".delete-result-modal");
-    //         openDeleteResultModal(deleteResultModal);
-    //     });
-    // });
+    allPasswordAccounts.map(function(item) {
+        item.addEventListener("click", function() {
+            const deleteResultModal = document.querySelector(".delete-result-modal");
+            openDeleteResultModal(deleteResultModal);
+        });
+    });
 });
 
 
