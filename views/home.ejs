@@ -189,6 +189,13 @@
     let deleteResultText = document.querySelector(".delete-result-text");
     const deletePasswordAccountSection = document.querySelector(".delete-option-password");
     let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
+
+    // all of the buttons within the delete modal
+    let allModalDeleteBtns = [
+            document.querySelector(".delete-yes"), 
+            document.querySelector(".delete-ok"), 
+            document.querySelector(".delete-no")
+        ];
 // end of section for delete main or password accounts
 
 // cancel delete
@@ -199,11 +206,7 @@
     const logOutBtn = document.querySelector(".operation-log-out");
 // end of logout button
 
-    
-    //reload page when password account is created and user clicks "ok"
-    resultModalBtns[1].addEventListener("click", function() {
-        location.assign("/");
-    });
+
     
     //create password account functionality
     createButton.addEventListener("click", async function(event) {
@@ -264,6 +267,9 @@
         } catch(err) {
             console.log(err);
         }
+
+        //reload page when password account is created and user clicks "ok"
+        resultModalBtns[1].addEventListener("click", pageRefresh);
     });
 
     
@@ -351,29 +357,19 @@
     // delete password accounts
     deletePasswordAccountSection.addEventListener("click", function() {
         // empties delete password account list
-        deletePasswordAccountsList.textContent = "";
+        deletePasswordAccountsList.textContent = ""
 
-        // sets the text of the modal to loading
-        deleteResultText.textContent = "Loading...";
-
-        // all of the buttons within the delete modal
-        let allModalDeleteBtns = [
-            document.querySelector(".delete-yes"), 
-            document.querySelector(".delete-ok"), 
-            deleteBtnNo = document.querySelector(".delete-no")
-        ];
-
-        
         // makes the delete buttons yes and no visible
         allModalDeleteBtns.map(function(item, index) {
             if(index !== 1) {
                 item.classList.add("active");
             }
         });
-
+        
         // gets all the password account names
         let [...allPasswordAccounts] = document.querySelectorAll(".fullname");
 
+        // creates delete options for user to select from
         allPasswordAccounts.map(function(item) {
             let accountName = document.createElement("p");
             let horizontalLine = document.createElement("hr");
@@ -384,10 +380,35 @@
 
             deletePasswordAccountsList.appendChild(accountName);
             deletePasswordAccountsList.appendChild(horizontalLine);
-            
-            
         });
+
+        let PasswordCardToBeDeleted = "";
+
+        let [...allDeletePasswordAccounts] = document.querySelectorAll(".delete-account-name");
+
+        //provides form of assurance to user before deleting password account
+        allDeletePasswordAccounts.map(function(item) {
+            item.addEventListener("click", function() {
+                PasswordCardToBeDeleted = item.textContent.trim();
+                deleteResultText.textContent = `Delete ${ PasswordCardToBeDeleted }?`;
+            });
+        });
+
+        //add delete password account functionality on the yes button
+        allModalDeleteBtns[0].addEventListener("click", function() {
+            if(deletePasswordAccount(PasswordCardToBeDeleted)) {
+                deleteResultText.textContent = "Success!"
+                allModalDeleteBtns[0].classList.remove("active");
+                allModalDeleteBtns[2].classList.remove("active");
+
+                allModalDeleteBtns[1].classList.add("active");
+            }
+        });
+
+        //refreshes entire page when user clicks ok button
+        allModalDeleteBtns[1].addEventListener("click", pageRefresh);
     });
+    
 
 
     //cancel delete functionality
@@ -425,9 +446,9 @@
     }
 
     // delete password account
-    async function deletePasswordAccount(email, accountName) {
+    async function deletePasswordAccount(accountName) {
         try {
-            let response = await fetch(`/api/delete-password-account/users/${ email }/${ accountName }`, {
+            let response = await fetch(`/api/delete-password-account/users/${ username }/${ accountName }`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" }
             });
@@ -435,7 +456,7 @@
             let data = await response.json();
 
             if(data.user) {
-                alert(`deleted password account ${ accountName }`);
+                return true;
             } else if(data.error) {
                 alert(data.error);
             }
@@ -444,12 +465,18 @@
         }
     }
 
+    //refreshes the entire page
+    function pageRefresh() {
+        location.assign("/");
+    }
+
     //removal of active class from buttons so that it's reset when making new requests
     function activeClassRemoval() {
         resultModalBtns.map(function(item) {
             item.classList.remove("active");
         });
     }
+
 </script>
 
 <%- include("partials/footer") %>
