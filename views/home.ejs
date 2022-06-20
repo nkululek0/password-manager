@@ -196,6 +196,9 @@
             document.querySelector(".delete-ok"), 
             document.querySelector(".delete-no")
         ];
+
+    // the password card that's going to be deleted
+    let PasswordCardToBeDeleted = "";
 // end of section for delete main or password accounts
 
 // cancel delete
@@ -381,8 +384,6 @@
             deletePasswordAccountsList.appendChild(accountName);
             deletePasswordAccountsList.appendChild(horizontalLine);
         });
-
-        let PasswordCardToBeDeleted = "";
 
         let [...allDeletePasswordAccounts] = document.querySelectorAll(".delete-account-name");
 
