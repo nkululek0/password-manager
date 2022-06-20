@@ -92,11 +92,10 @@ module.exports.deletePasswordAccount = async function(req, res) {
 module.exports.deleteUserAccount = async function(req, res) {
     try {
         // delete user based off of the id
-        await User.findByIdAndDelete(req.params.id);
+        await User.findOneAndDelete({ email: req.params.email });
 
         console.log(`successfully deleted user ${ req.params.email }`);
         res.cookie("login", "", { maxAge: 1 });
-        res.redirect("/api/login");
     } catch(err) {
         res.json({ error: err.message });
     }
