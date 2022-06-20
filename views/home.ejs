@@ -187,6 +187,7 @@
     const deleteBtn = document.querySelector(".operation-delete");
     const deleteOptions = document.querySelector(".delete-options");
     let deleteResultText = document.querySelector(".delete-result-text");
+    const deleteUserAccountSection = document.querySelector(".delete-main-account");
     const deletePasswordAccountSection = document.querySelector(".delete-option-password");
     let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
 
@@ -412,6 +413,23 @@
     
 
 
+    //delete user account functionality
+    deleteUserAccountSection.addEventListener("click", function() {
+        deleteResultText.textContent = "Delete User Account?";
+
+        allModalDeleteBtns[0].classList.add("active");
+        allModalDeleteBtns[2].classList.add("active");
+
+        allModalDeleteBtns[1].classList.remove("active");
+
+        allModalDeleteBtns[0].addEventListener("click", function() {
+            if(deleteUserAccount(username)) {
+                loginRedirect();
+            }
+        });
+    });
+
+
     //cancel delete functionality
     cancelDelete.addEventListener("click", function() {
         openPasswordModal.classList.remove("hide");
@@ -446,6 +464,8 @@
         }
     }
 
+
+
     // delete password account
     async function deletePasswordAccount(accountName) {
         try {
@@ -459,16 +479,44 @@
             if(data.user) {
                 return true;
             } else if(data.error) {
-                alert(data.error);
+                return data.error;
             }
         } catch(err) {
             console.error(err);
         }
     }
 
+    // delete user account
+    async function deleteUserAccount(email) {
+        try {
+            let response = await fetch(`/api/delete-user-account/users/${ email }`, {
+                method: "DELETE",
+                headers: { "Content-type": "application/json" }
+            });
+
+            let data = await response.json();
+
+            if(data.error) {
+                alert(data.error);
+                return data.error;
+            } else {
+                return true;
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
+
+
     //refreshes the entire page
     function pageRefresh() {
         location.assign("/");
+    }
+
+    //redirects to login page
+    function loginRedirect() {
+        location.assign("/api/login");
     }
 
     //removal of active class from buttons so that it's reset when making new requests
