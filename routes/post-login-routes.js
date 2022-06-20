@@ -10,6 +10,6 @@ router.patch("/delete-password-account/users/:email/:accountName", navController
 router.get("/logout/users", navController.logoutUser);
 
 // DELETE requests
-router.delete("/delete-user-account/users/:id/:email", navController.deleteUserAccount);
+router.delete("/delete-user-account/users/:email", navController.deleteUserAccount);
 
 module.exports = router;
