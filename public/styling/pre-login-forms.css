@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 1rem 0;
+    background-color: var(--main-color);
+}
+
+.main-content {
+    padding-top: 2.7rem;
+}
+    .paper-stack-form {
+        width: 50vw;
+        height: 65vh;
+    }
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            height: 100%;
+        }
+            .form-header {
+                align-self: center;
+            }
+                .page-indicattion {
+                    margin: 0 auto;
+                    width: fit-content;
+                }
+
+            .form-body {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                height: 70%;
+            }
+                .form-attribute {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.2rem;
+                }
+            .form-footer {
+                align-self: center;
+            }
+    .paper-stack-form::before,
+    .paper-stack-form::after {
+        width: 50vw;
+        height: 65vh;
+    }
+
+footer {
+    align-self: center;
+}
