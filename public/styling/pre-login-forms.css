@@ -14,7 +14,7 @@ body {
         max-width: 500px;
         min-width: 300px;
         height: 65vh;
-        padding: 1rem 2.5rem;
+        padding: 1.2rem 2.5rem;
     }
         form {
             display: flex;
@@ -24,6 +24,7 @@ body {
         }
             .form-header {
                 align-self: center;
+                margin-top: 1.2rem;
             }
                 .page-indicattion {
                     margin: 0 auto;
@@ -51,10 +52,12 @@ body {
                         border-radius: 4px;
                         outline: none;
                         border: 1px solid var(--shadow-color);
+                        background-color: #FF7A00;
                     }
                     .form-attribute > input:focus-within {
                         box-shadow: 1px 4px var(--main-color), -1px 4px var(--main-color);
                         border: 1px solid var(--main-color);
+                        background-color: white;
                     }
             .form-footer {
                 align-self: center;

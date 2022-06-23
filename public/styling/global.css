@@ -8,7 +8,6 @@
 
 :root {
     --main-color: #FF5E00;
-    --border-color: #E6E6E6;
     --shadow-color: rgba(0,0,0,0.3);
 }
 
@@ -21,6 +20,7 @@
     padding: 1rem;
     background-color: white;
     box-shadow: -1pt 5pt 7pt 1pt var(--shadow-color);
+    border: 1px solid var(--shadow-color);
     border-radius: 4px;
 }
 .paper-stack-form > form {
@@ -38,7 +38,7 @@
         right: 0;
         bottom: 0;
         background-color: white;
-        border: 1px solid var(--border-color);
+        border: 1px solid var(--shadow-color);
         border-radius: 4px;
         transform: scale(0.9) translate(0,0);
         transition: all ease 0.3s;
