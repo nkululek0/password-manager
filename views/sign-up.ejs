@@ -4,17 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Safe Store</title>
     <link rel="stylesheet" href="/styling/global.css">
+    <link rel="stylesheet" href="/styling/pre-login-forms.css">
 </head>
 <body>
-    <form>
-        <h3 class="form-heading">Safe Store</h3>
-        <p class="page-indication">sign up</p>
-        <%- include("partials/form-fields") %>
-        <button class="sign-up-button">Sign Up</button>
-        <a href="/api/login">back to login</a>
-    </form>
+    <div class="main-content">
+        <div class="paper-stack-form">
+            <form>
+                <div class="form-header">
+                    <h1 class="form-heading">Safe Store</h1>
+                    <p class="page-indication">sign up</p>
+                </div>
+                <div class="form-body">
+                    <%- include("partials/form-fields") %>
+                </div>
+                <div class="form-footer">
+                    <button>Sign Up</button>
+                    <span> | </span>
+                    <a href="/api/login">Back to Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
 <script>
     const form = document.querySelector("form");
