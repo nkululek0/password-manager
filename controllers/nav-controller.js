@@ -47,6 +47,9 @@ module.exports.updatePasswordAccount = async function(req, res) {
     accountPassword = decrypt(accountPassword) ? decrypt(accountPassword) : accountPassword;
 
     try {
+        // encryption of password before updating password account
+        accountPassword = encrypt(accountPassword);
+
         // find user based on email and update specified password account
         const user = await User.findOneAndUpdate({
             email: req.params.email,
@@ -72,6 +75,11 @@ module.exports.updatePasswordAccount = async function(req, res) {
 }
 
 // GET requests
+// decrypt password
+module.exports.decryptPassword = function(req, res) {
+    res.json({ password: decrypt(req.params.accountPassword) });
+}
+
 // delete password account
 module.exports.deletePasswordAccount = async function(req, res) {
     try {
@@ -122,5 +130,5 @@ function encrypt(message) {
 // decrypt and return decrypted version of message
 function decrypt(message) {
     let bytes = cryptoJs.AES.decrypt(message, process.env.SECRECT_KEY);
-    return bytes.toString(cryptojs.enc.Utf8);
+    return bytes.toString(cryptoJs.enc.Utf8);
 }
