@@ -31,4 +31,4 @@ app.use("/api", preLoginRoutes);
 
 // routes for when user has logged in
 const postLoginRoutes = require("./routes/post-login-routes.js");
-app.use("/api",  postLoginRoutes);
+app.use("/api",  authorise, postLoginRoutes);

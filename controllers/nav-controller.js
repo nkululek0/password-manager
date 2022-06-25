@@ -75,6 +75,11 @@ module.exports.updatePasswordAccount = async function(req, res) {
 }
 
 // GET requests
+// encrypt password
+module.exports.encryptPassword = function(req, res) {
+    res.json({ password: encrypt(req.params.accountPassword) });
+}
+
 // decrypt password
 module.exports.decryptPassword = function(req, res) {
     res.json({ password: decrypt(req.params.accountPassword) });

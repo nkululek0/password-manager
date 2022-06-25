@@ -7,6 +7,7 @@ router.patch("/update-password-account/users/:email/:accountName", navController
 router.patch("/delete-password-account/users/:email/:accountName", navController.deletePasswordAccount);
 
 // GET requests
+router.get("/encrypt-password/users/:accountPassword", navController.encryptPassword);
 router.get("/decrypt-password/users/:accountPassword", navController.decryptPassword);
 router.get("/logout/users", navController.logoutUser);
 
