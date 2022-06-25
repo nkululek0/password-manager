@@ -44,7 +44,7 @@ module.exports.updatePasswordAccount = async function(req, res) {
     let { accountName, accountUsername, accountPassword } = req.body;
 
     // decrypt account password before attempting tp update password account
-    accountPassword = decrypt(accountPassword);
+    accountPassword = decrypt(accountPassword) ? decrypt(accountPassword) : accountPassword;
 
     try {
         // find user based on email and update specified password account
