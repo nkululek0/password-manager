@@ -4,18 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Store</title>
     <link rel="stylesheet" href="/styling/global.css">
-    <title>Login</title>
+    <link rel="stylesheet" href="/styling/pre-login-forms.css">
 </head>
 <body>
-    <form>
-        <h3 class="form-heading">Safe Store</h3>
-        <p class="page-indicattion">login</p>
-        <%- include("partials/form-fields"); %> 
-        <button class="login-button">Login</button>
-        <span>-- or --</span>
-        <a href="/api/sign-up" class="sign-up-button">Sign Up</a>
-    </form>
+    <div class="main-content">
+        <div class="paper-stack-form">
+            <form>
+                <div class="form-header">
+                    <h1 class="form-heading">Safe Store</h1>
+                    <p class="page-indication">login</p>
+                </div>
+               <div class="form-body">
+                    <%- include("partials/form-fields"); %> 
+                </div>
+                <div class="form-footer">
+                    <button>Login</button>
+                    <span> | </span>
+                    <a href="/api/sign-up">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
 <script>
     const form = document.querySelector("form");
@@ -36,11 +47,6 @@
         let password = form.password.value;
 
         try {
-            if(password.length < 8) {
-                passwordError.textContent = "Password has to be 8 characters or more";
-                return;
-            }
-
             let response = await fetch("/api/login/users", {
                 method: "POST",
                 body: JSON.stringify({ email, password }),

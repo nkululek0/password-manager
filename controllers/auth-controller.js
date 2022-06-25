@@ -13,12 +13,9 @@ module.exports.postSignUp = async function(req, res) {
     let { email, password } = req.body;
 
     try {
-        let salt = await bcrypt.genSalt();
-        password = await bcrypt.hash(password, salt);
-        
         const user = await User.create({ email, password });
 
-        console.log(`successfully created user ${ user.email }`);
+        console.log(`successfully created user ${ email }`);
         res.status(201).json({ user: user._id });
     } catch(err) {
         let errorMessages = signUpErrors(err);
@@ -37,7 +34,7 @@ module.exports.postLogin = async function(req, res) {
         const user = await User.login(email, password);
         let token = createToken(user._id);
         res.cookie("login", token, { httpOnly: true, maxAge: maxAge * 1000 });
-        console.log(`logged in user ${ user.email }`);
+        console.log(`logged in user ${ email }`);
         res.json({ user: user._id });
     } catch(err) {
         let errorMessages = loginErrors(err);

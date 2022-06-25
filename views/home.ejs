@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Store</title>
     <link rel="stylesheet" href="/styling/global.css">
     <link rel="stylesheet" href="/styling/home.css">
     <script defer src="/scripts/modal.js"></script>
-    <title>Safe Store</title>
 </head>
 <body>
     
@@ -28,49 +28,10 @@
                         <div class="password-card-details">
                             <p class="password-card-name"> <%= account.accountName %> </p>
                             <button class="password-card-btn">Password</button>
-                            <div class="password-account-modal">
-                                <div class="close-password-account-modal"><p>&times;</p></div>
-                                <div class="password-account-main">
-                                    <div class="password-account-name">
-                                        <div class="password-account-inital">
-                                            <p class="initial"> <%= account.accountName[0] %> </p>
-                                        </div>
-                                        <div class="password-account-fullname">
-                                            <p class="fullname"> <%= account.accountName %> </p>
-                                        </div>
-                                    </div>
-                                    <div class="password-account-details">
-                                        <form action="">
-                                            <div class="form-fields">
-                                                <div class="form-attribute">
-                                                    <label for="username">Username:</label>
-                                                        <input type="text" name="username" id="" value="<%= account.accountUsername %>">                
-                                                </div>
-                                                <div class="form-attribute">
-                                                    <label for="password">Password:</label>
-                                                        <input type="password" name="password" id="" value="<%= account.accountPassword %>">
-                                                </div>
-                                            </div>
-                                            <div class="copy-password">copy password</div>
-                                        </form>
-                                        <div class="password-account-modal-button-options">
-                                            <button class="modify password-account-button">Modify</button>
-                                            <button class="save password-account-button open-password-result-modal">Save</button>
-                                            <div class="password-result-modal">
-                                                <p class="password-result-text">update success!</p>
-                                                <div class="options">
-                                                    <button class="result-ok close-password-result-modal">Ok</button>
-                                                </div>
-                                            </div>
-                                            <div id="password-result-overlay"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="password-account-overlay"></div>
+                            <%- include("modals/update-password-account-modal", { account: account }); %>
                         </div>
                     </div>
-                <% }) %>
+                <% }); %>
             <% } else {%>
                 <div class="no-passwords-div">
                     <p class="no-passwords-text">No Passwords to be Shown</p>
@@ -83,32 +44,7 @@
                 <input type="text" class="operation-search" placeholder="search">
                 <div class="operation-creation-div">
                     <button class="operation-create open-modal">Create</button>
-                    <div class="modal">
-                        <div class="close-modal"><p>&times;</p></div>
-                        <form action="">
-                            <div class="form-fields">
-                                <div class="form-attribute">
-                                    <label for="account_name">Account Name:</label>
-                                        <input type="text" name="account_name">
-                                        <div class="account-name-error"></div>
-                                </div>
-                                <%- include("partials/form-fields") %>
-                            </div>
-                            <div class="submit-button-div">
-                                <button class="create-password open-result-modal">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="overlay"></div>
-                    <div class="result-modal">
-                        <p class="result-text"></p>
-                        <div class="options">
-                            <button class="result-yes close-result-modal">Yes</button>
-                            <button class="result-ok close-result-modal">Ok</button>
-                            <button class="result-no close-result-modal">No</button>
-                        </div>
-                    </div>
-                    <div id="result-overlay"></div>
+                    <%- include("modals/create-password-account-modal"); %>
                 </div>
                 <div class="operation-deletion-div">
                     <button class="operation-delete">Delete</button>
@@ -126,15 +62,7 @@
                                 </div>
                                 <div class="delete-password-accounts-list"></div>
                             </div>
-                            <div class="delete-result-modal">
-                                <p class="delete-result-text"></p>
-                                <div class="options">
-                                    <button class="delete-yes">Yes</button>
-                                    <button class="delete-ok">Ok</button>
-                                    <button class="delete-no">No</button>
-                                </div>
-                            </div>
-                            <div id="delete-result-overlay"></div>
+                            <%- include("modals/delete-password-account-modal"); %>
                         </div>
                         <p class="delete-cancel">cancel</p>
                     </div>

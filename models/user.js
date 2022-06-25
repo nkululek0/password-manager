@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Please enter password"],
+        minlength: [8, "please enter password wtih at least 8 characters"]
     },
     accounts: [{
         accountName: String,
@@ -21,6 +22,12 @@ const UserSchema = new mongoose.Schema({
     }]
 });
 
+// encryption of password before a user is saved to database
+UserSchema.pre("save", async function(next) {
+    let salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
 
 // login functionality where inserted passwords are verified before user is logged in
 UserSchema.statics.login = async function(email, password) {
