@@ -51,3 +51,11 @@
         transform: scale(0.92) translate(0, -28pt);
         z-index: -2;
     }
+
+/* error field within forms */
+.error-field {
+    color: red;
+    text-shadow: 0 0 black;
+    font-size: 1rem;
+}
+/* end of error field within forms */
