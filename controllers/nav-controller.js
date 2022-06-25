@@ -67,7 +67,7 @@ module.exports.updatePasswordAccount = async function(req, res) {
             return res.status(404).json({ error: "user not found" });
         }
         
-        console.log(`successfully updated password account details for user ${ user.email }`);
+        console.log(`successfully updated ${ accountName } password account details of user ${ req.params.email }`);
         res.json({ user: user._id });
     } catch(err) {
         res.json({ error: err.message });
@@ -91,7 +91,7 @@ module.exports.deletePasswordAccount = async function(req, res) {
             }
         });
 
-        console.log(`successfully deleted password account ${ req.params.accountName} for user ${ req.params.email }`);
+        console.log(`successfully deleted password account ${ req.params.accountName} of user ${ req.params.email }`);
         res.json({ user: user._id });
     } catch(err) {
         res.json({ error: err.message });
