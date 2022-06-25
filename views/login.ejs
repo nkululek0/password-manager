@@ -47,11 +47,6 @@
         let password = form.password.value;
 
         try {
-            if(password.length < 8) {
-                passwordError.textContent = "Password has to be 8 characters or more";
-                return;
-            }
-
             let response = await fetch("/api/login/users", {
                 method: "POST",
                 body: JSON.stringify({ email, password }),
