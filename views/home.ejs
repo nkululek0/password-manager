@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styling/global.css">
     <link rel="stylesheet" href="/styling/home.css">
     <script defer src="/scripts/modal.js"></script>
+    <script defer src="/scripts/requests.js"></script>
 </head>
 <body>
     
@@ -141,7 +142,7 @@
 
     
     //create password account functionality
-    createButton.addEventListener("click", async function(event) {
+    createButton.addEventListener("click", function(event) {
         event.preventDefault();
     
         
@@ -162,7 +163,7 @@
         let accountPassword = createPasswordForm.password.value;
 
         if(!accountName) {
-            accountNameError.textContent = "Please enter account name";
+            accountNameError.textContent = "no account name provided";
             return;
         }
         if(!accountUsername) {
@@ -173,31 +174,16 @@
             accountPasswordError.textContent = "no password provided";
             return;
         }
-        
-        try {
-            let response = await fetch(`/api/create-password-account/users/${ username }`, {
-                method: "PATCH",
-                body: JSON.stringify({ accountName, accountUsername, accountPassword }),
-                headers: { "Content-Type": "application/json" }
-            });
 
-            let data = await response.json();
-
-            if(data.user) {
-                resultModalText.textContent = "success!";
-                resultModalBtns[1].classList.add("active");
-            }
-
-            if(data.error) {
-                if(data.error.includes("account already exists, update instead?")){
-                    resultModalText.textContent = "account already exists, update instead?";
-                    resultModalBtns[0].classList.add("active");
-                    resultModalBtns[2].classList.add("active");
-                }
-                console.log(data);
-            }
-        } catch(err) {
-            console.log(err);
+        let response = createPasswordAccount(accountName, accountUsername, accountPassword);
+        console.log(response);
+        if(response) {
+            resultModalText.textContent = "success!";
+            resultModalBtns[1].classList.add("active");
+        } else if(response.includes("account already exists, update instead?")) {
+            resultModalText.textContent = "account already exists, update instead?";
+            resultModalBtns[0].classList.add("active");
+            resultModalBtns[2].classList.add("active");
         }
 
         //reload page when password account is created and user clicks "ok"
@@ -216,6 +202,7 @@
         let accountName = createPasswordForm.account_name.value;
         let accountUsername = createPasswordForm.email.value;
         let accountPassword = createPasswordForm.password.value;
+        
 
         if(updatePasswordAccount(accountName, accountUsername, accountPassword)){
             resultModalText.textContent = "update success!";
@@ -365,75 +352,6 @@
         deleteOptions.classList.remove("active");
         deletePasswordAccountsList.textContent = "";
     });
-
-
-    
-    //update password account function
-    async function updatePasswordAccount(accountName, accountUsername, accountPassword) {
-        try {
-            let response = await fetch(`api/update-password-account/users/${ username }/${ accountName }`, {
-                method: "PATCH",
-                body: JSON.stringify({ accountName, accountUsername, accountPassword }),
-                headers: { "Content-Type": "application/json" }
-            });
-
-            let data = await response.json();
-
-            if(data.user) {
-                return true;
-            }
-
-            if(data.error) {
-                console.log(data);
-                return data.error;
-            }
-        } catch(err) {
-            console.log(err);
-        }
-    }
-
-
-
-    // delete password account
-    async function deletePasswordAccount(accountName) {
-        try {
-            let response = await fetch(`/api/delete-password-account/users/${ username }/${ accountName }`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" }
-            });
-
-            let data = await response.json();
-
-            if(data.user) {
-                return true;
-            } else if(data.error) {
-                return data.error;
-            }
-        } catch(err) {
-            console.error(err);
-        }
-    }
-
-    // delete user account
-    async function deleteUserAccount(email) {
-        try {
-            let response = await fetch(`/api/delete-user-account/users/${ email }`, {
-                method: "DELETE",
-                headers: { "Content-type": "application/json" }
-            });
-
-            let data = await response.json();
-
-            if(data.error) {
-                alert(data.error);
-                return data.error;
-            } else {
-                return true;
-            }
-        } catch(err) {
-            console.error(err);
-        }
-    }
 
 
 
