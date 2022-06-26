@@ -142,7 +142,7 @@
 
     
     //create password account functionality
-    createButton.addEventListener("click", function(event) {
+    createButton.addEventListener("click", async function(event) {
         event.preventDefault();
     
         
@@ -175,15 +175,17 @@
             return;
         }
 
-        let response = createPasswordAccount(accountName, accountUsername, accountPassword);
-        console.log(response);
-        if(response) {
+        let response = await createPasswordAccount(accountName, accountUsername, accountPassword);
+
+        if(response.error) {
+            if(response.error.includes("account already exists, update instead?")) {
+                resultModalText.textContent = "account already exists, update instead?";
+                resultModalBtns[0].classList.add("active");
+                resultModalBtns[2].classList.add("active");
+            }
+        } else if(response) {
             resultModalText.textContent = "success!";
             resultModalBtns[1].classList.add("active");
-        } else if(response.includes("account already exists, update instead?")) {
-            resultModalText.textContent = "account already exists, update instead?";
-            resultModalBtns[0].classList.add("active");
-            resultModalBtns[2].classList.add("active");
         }
 
         //reload page when password account is created and user clicks "ok"
@@ -192,7 +194,7 @@
 
     
     //update the password account when the result-yes button is clicked
-    resultModalBtns[0].addEventListener("click", function() {
+    resultModalBtns[0].addEventListener("click", async function() {
         //default text within result modal
         resultModalText.textContent = "Loading...";
 
@@ -203,12 +205,13 @@
         let accountUsername = createPasswordForm.email.value;
         let accountPassword = createPasswordForm.password.value;
         
+        let response = await updatePasswordAccount(accountName, accountUsername, accountPassword);
 
-        if(updatePasswordAccount(accountName, accountUsername, accountPassword)){
+        if(response.error) {
+            resultModalText.textContent = response.error;
+        } else if(response){
             resultModalText.textContent = "update success!";
             resultModalBtns[1].classList.add("active");;
-        } else if(data.error) {
-            resultModalText.textContent = data.error;
         }
     });
 
@@ -224,11 +227,13 @@
             let accountUsername = passwordAccountForm[index].username.value;
             let accountPassword = passwordAccountForm[index].password.value;
 
-            if(updatePasswordAccount(accountName, accountUsername, accountPassword)) {
+            let response = updatePasswordAccount(accountName, accountUsername, accountPassword);
+
+            if(data.error) {
+                passwordResultText[index].textContent = data.error;
+            } else if(response) {
                 passwordResultText[index].textContent = "update success!";
                 passwordResultModalBtns[index].classList.add("active");
-            } else if(data.error) {
-                passwordResultText[index].textContent = data.error;
             }
         });
     });

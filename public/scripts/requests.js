@@ -9,12 +9,10 @@ async function createPasswordAccount(accountName, accountUsername, accountPasswo
 
         let data = await response.json();
 
-        if(data.user) {
-            return true
-        }
-
         if(data.error) {
-            return data.error;
+            return data;
+        } else if(data.user) {
+            return true
         }
     } catch(err) {
         console.log(err);
@@ -32,13 +30,10 @@ async function updatePasswordAccount(accountName, accountUsername, accountPasswo
 
         let data = await response.json();
 
-        if(data.user) {
-            return true;
-        }
-
         if(data.error) {
-            console.log(data);
-            return data.error;
+            return data;
+        } else if(data.user) {
+            return true;
         }
     } catch(err) {
         console.log(err);
@@ -55,10 +50,10 @@ async function deletePasswordAccount(accountName) {
 
         let data = await response.json();
 
-        if(data.user) {
+        if(data.error) {
+            return data;
+        } else if(data.user) {
             return true;
-        } else if(data.error) {
-            return data.error;
         }
     } catch(err) {
         console.error(err);
