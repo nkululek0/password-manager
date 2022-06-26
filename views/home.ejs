@@ -81,67 +81,33 @@
     const [...accountPasswordCards] = document.querySelectorAll(".password-card");
     const [...accountPasswordCardNames] = document.querySelectorAll(".password-card-name");
 
+    // logout button
+    const logOutBtn = document.querySelector(".operation-log-out");
+
+
+    
+// create password account section
+
     const openPasswordModal = document.querySelector(".open-modal");
     const createButton = document.querySelector(".create-password");
 
+    // form for modal
     let createPasswordForm = document.querySelector(".modal > form");
     
+    // error fields
     let accountNameError = document.querySelector(".account-name-error");
     let accountUsernameError = document.querySelector(".email-error");
     let accountPasswordError = document.querySelector(".password-error");
     
+    // text within the modal
     let resultModalText = document.querySelector(".result-text");
 
     //all the buttons within the resultModal
     const [...resultModalBtns] = document.querySelectorAll(".close-result-modal");
 
 
-// section for password account modal //
-    let [...passwordAccountForm] = document.querySelectorAll(".password-account-details > form");
 
-    //save buttons within password account modal
-    const [...savePasswordAccountBtns] = document.querySelectorAll(".open-password-result-modal");
-
-    let [...passwordResultModalBtns] = document.querySelectorAll(".close-password-result-modal");
-// end of section for password account modal //
-
-
-
-// section for searching password accounts
-    const searchInput = document.querySelector(".operation-search");    
-    const noSearchResult = document.querySelector(".no-search-result");
-// end of section for searching password accounts
-
-// sections for deleting main or password accounts
-    const deleteBtn = document.querySelector(".operation-delete");
-    const deleteOptions = document.querySelector(".delete-options");
-    let deleteResultText = document.querySelector(".delete-result-text");
-    const deleteUserAccountSection = document.querySelector(".delete-main-account");
-    const deletePasswordAccountSection = document.querySelector(".delete-option-password");
-    let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
-
-    // all of the buttons within the delete modal
-    let allModalDeleteBtns = [
-            document.querySelector(".delete-yes"), 
-            document.querySelector(".delete-ok"), 
-            document.querySelector(".delete-no")
-        ];
-
-    // the password card that's going to be deleted
-    let PasswordCardToBeDeleted = "";
-// end of section for delete main or password accounts
-
-// cancel delete
-    const cancelDelete = document.querySelector(".delete-cancel");
-// end of cancel delete
-
-// logout button
-    const logOutBtn = document.querySelector(".operation-log-out");
-// end of logout button
-
-
-    
-    //create password account functionality
+    // fetch request to create password account
     createButton.addEventListener("click", async function(event) {
         event.preventDefault();
     
@@ -191,7 +157,6 @@
         //reload page when password account is created and user clicks "ok"
         resultModalBtns[1].addEventListener("click", pageRefresh);
     });
-
     
     //update the password account when the result-yes button is clicked
     resultModalBtns[0].addEventListener("click", async function() {
@@ -214,6 +179,21 @@
             resultModalBtns[1].classList.add("active");;
         }
     });
+
+// end of fetch request to create password account
+
+
+
+// view password account section
+
+    let [...passwordAccountForm] = document.querySelectorAll(".password-account-details > form");
+
+    //save buttons within password account modal
+    const [...savePasswordAccountBtns] = document.querySelectorAll(".open-password-result-modal");
+
+    let [...passwordResultModalBtns] = document.querySelectorAll(".close-password-result-modal");
+
+
 
     //save updated password account on password account modal when save button is clicked
     savePasswordAccountBtns.map(function(item, index) {
@@ -238,9 +218,15 @@
         });
     });
 
+// end of view password account section
+
 
     
-    // search for password accounts based on user input
+// search password accounts section
+
+    const searchInput = document.querySelector(".operation-search");    
+    const noSearchResult = document.querySelector(".no-search-result");
+
     searchInput.addEventListener("keyup", function() {
         //removes the active class so the no search result text won't show
         noSearchResult.classList.remove("active");
@@ -268,17 +254,42 @@
         }
     });
 
+// end of search password accounts section
 
 
-    //delete button functionality
+
+// delete section
+
+    // cancel delete
+    const cancelDelete = document.querySelector(".delete-cancel");
+
+    const deleteBtn = document.querySelector(".operation-delete");
+    const deleteOptions = document.querySelector(".delete-options");
+    let deleteResultText = document.querySelector(".delete-result-text");
+    const deleteUserAccountSection = document.querySelector(".delete-main-account");
+    const deletePasswordAccountSection = document.querySelector(".delete-option-password");
+    let deletePasswordAccountsList = document.querySelector(".delete-password-accounts-list");
+    
+
+
+    // all of the buttons within the delete modal
+    let allModalDeleteBtns = [
+            document.querySelector(".delete-yes"), 
+            document.querySelector(".delete-ok"), 
+            document.querySelector(".delete-no")
+        ];
+
+    // the password card that's going to be deleted
+    let PasswordCardToBeDeleted = "";
+
+    //delete modal button functionality
     deleteBtn.addEventListener("click", function() {
         openPasswordModal.classList.add("hide");
         logOutBtn.classList.add("hide");
         deleteOptions.classList.add("active");
     });
 
-
-    // delete password accounts
+// delete password accounts request
     deletePasswordAccountSection.addEventListener("click", function() {
         // empties delete password account list
         deletePasswordAccountsList.textContent = ""
@@ -330,10 +341,12 @@
         //refreshes entire page when user clicks ok button
         allModalDeleteBtns[1].addEventListener("click", pageRefresh);
     });
+
+// end of delete password accounts request
     
 
 
-    //delete user account functionality
+// delete user account request
     deleteUserAccountSection.addEventListener("click", function() {
         deleteResultText.textContent = "Delete User Account?";
 
@@ -349,6 +362,8 @@
         });
     });
 
+// end of delete user account request
+
 
     //cancel delete functionality
     cancelDelete.addEventListener("click", function() {
@@ -358,7 +373,9 @@
         deletePasswordAccountsList.textContent = "";
     });
 
+// end of delete section
 
+// global functions section 
 
     //refreshes the entire page
     function pageRefresh() {
@@ -377,6 +394,7 @@
         });
     }
 
+// end of global functions section 
 </script>
 
 <%- include("partials/footer") %>
