@@ -1,3 +1,6 @@
+//value used for fetch request when performing API related operations
+const username = document.querySelector(".username").textContent.trim();
+
 // create password account function
 async function createPasswordAccount(accountName, accountUsername, accountPassword) {
     try {
