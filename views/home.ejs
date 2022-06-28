@@ -11,68 +11,73 @@
     <script defer src="/scripts/requests.js"></script>
 </head>
 <body>
-    
-    <header>
-        <h3 class="page-heading">Safe Store</h3>
-        <p>logged in as <span class="username"><%= user.email %></span></p>
-    </header>
-
-    <div class="home-main">
-        <section class="passwords-view">
-            <div class="no-search-result">no result found</div>
-            <% if(user.accounts.length) {%>
-                <% user.accounts.map(function(account) { %>
-                    <div class="password-card">
-                        <div class="password-card-initial">
-                            <p> <%= account.accountName[0] %> </p>
-                        </div>
-                        <div class="password-card-details">
-                            <p class="password-card-name"> <%= account.accountName %> </p>
-                            <button class="password-card-btn">Password</button>
-                            <%- include("modals/update-password-account-modal", { account: account }); %>
-                        </div>
-                    </div>
-                <% }); %>
-            <% } else {%>
-                <div class="no-passwords-div">
-                    <p class="no-passwords-text">No Passwords to be Shown</p>
-                </div>
-            <% } %>
-        </section>
-    
-        <section class="operations-view">
-            <div class="main-page-operations">
-                <input type="text" class="operation-search" placeholder="search">
-                <div class="operation-creation-div">
-                    <button class="operation-create open-modal">Create</button>
-                    <%- include("modals/create-password-account-modal"); %>
-                </div>
-                <div class="operation-deletion-div">
-                    <button class="operation-delete">Delete</button>
-                    <div class="delete-options">
-                        <div class="delete-option-main">
-                            <div class="delete-main-account">
-                                <input type="radio" name="" id="">
-                                <p>Main Account</p>
-                            </div>
-                            <hr class="delete-options-seperator"/>
-                            <div class="delete-option-password">
-                                <div class="delete-password-account">
-                                    <p class="downwards-arrow">&darr;</p>
-                                    <p>Password Account</p>
-                                </div>
-                                <div class="delete-password-accounts-list"></div>
-                            </div>
-                            <%- include("modals/delete-password-account-modal"); %>
-                        </div>
-                        <p class="delete-cancel">cancel</p>
-                    </div>
-                </div>
+    <div class="main-content">
+        <header class="main-page-heading">
+            <div class="page-logo">
+                <h1>Safe Store</h1>
             </div>
-            <a href="/api/logout/users" class="operation-log-out">log out</a>
-        </section>
-    </div>
+            <div class="page-login-indication">
+                <p>logged in as <span class="username"><%= user.email %></span></p>
+            </div>
+        </header>
+    
+        <div class="home-main">
+            <section class="passwords-view">
+                <div class="no-search-result">no result found</div>
+                <% if(user.accounts.length) {%>
+                    <% user.accounts.map(function(account) { %>
+                        <div class="password-card">
+                            <div class="password-card-initial">
+                                <p> <%= account.accountName[0] %> </p>
+                            </div>
+                            <div class="password-card-details">
+                                <p class="password-card-name"> <%= account.accountName %> </p>
+                                <button class="password-card-btn">Password</button>
+                                <%- include("modals/update-password-account-modal", { account: account }); %>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else {%>
+                    <div class="no-passwords-div">
+                        <p class="no-passwords-text">No Passwords to be Shown</p>
+                    </div>
+                <% } %>
+            </section>
+        
+            <section class="operations-view">
+                <div class="main-page-operations">
+                    <input type="text" class="operation-search" placeholder="search">
+                    <div class="operation-creation-div">
+                        <button class="operation-create open-modal">Create</button>
+                        <%- include("modals/create-password-account-modal"); %>
+                    </div>
+                    <div class="operation-deletion-div">
+                        <button class="operation-delete">Delete</button>
+                        <div class="delete-options">
+                            <div class="delete-option-main">
+                                <div class="delete-main-account">
+                                    <input type="radio" name="" id="">
+                                    <p>Main Account</p>
+                                </div>
+                                <hr class="delete-options-seperator"/>
+                                <div class="delete-option-password">
+                                    <div class="delete-password-account">
+                                        <p class="downwards-arrow">&darr;</p>
+                                        <p>Password Account</p>
+                                    </div>
+                                    <div class="delete-password-accounts-list"></div>
+                                </div>
+                                <%- include("modals/delete-password-account-modal"); %>
+                            </div>
+                            <p class="delete-cancel">cancel</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="/api/logout/users" class="operation-log-out">log out</a>
+            </section>
 
+        </div>
+    </div>
 <script>
     // password card values
     const passwordsView = document.querySelector(".passwords-view");
