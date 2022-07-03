@@ -69,7 +69,7 @@
                                 </div>
                                 <%- include("modals/delete-password-account-modal"); %>
                             </div>
-                            <p class="delete-option-indicator" class="delete-cancel">cancel</p>
+                            <p class="delete-cancel delete-option-indicator">cancel</p>
                         </div>
                     </div>
                 </div>
@@ -263,9 +263,6 @@
 
 // delete section
 
-    // cancel delete
-    const cancelDelete = document.querySelector(".delete-cancel");
-
     const deleteBtn = document.querySelector(".operation-delete");
     const deleteOptions = document.querySelector(".delete-options");
     let deleteResultText = document.querySelector(".delete-result-text");
@@ -290,10 +287,22 @@
         openPasswordModal.classList.add("hide");
         logOutBtn.classList.add("hide");
         deleteOptions.classList.add("active");
+
+        // cancel delete
+        const cancelDelete = document.querySelector(".delete-cancel");
+
+        cancelDelete.addEventListener("click", function() {
+            console.log("cancel clicked")
+            openPasswordModal.classList.remove("hide");
+            logOutBtn.classList.remove("hide");
+            deleteOptions.classList.remove("active");
+            deletePasswordAccountsList.textContent = "";
+        });
     });
 
 // delete password accounts request
     deletePasswordAccountSection.addEventListener("click", function() {
+
         // empties delete password account list
         deletePasswordAccountsList.textContent = ""
 
@@ -371,13 +380,6 @@
 // end of delete user account request
 
 
-    //cancel delete functionality
-    cancelDelete.addEventListener("click", function() {
-        openPasswordModal.classList.remove("hide");
-        logOutBtn.classList.remove("hide");
-        deleteOptions.classList.remove("active");
-        deletePasswordAccountsList.textContent = "";
-    });
 
 // end of delete section
 
