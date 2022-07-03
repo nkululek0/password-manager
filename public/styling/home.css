@@ -608,5 +608,6 @@ body {
 /* footer styling */
 footer {
     align-self: center;
+    text-shadow: -1px 1px var(--shadow-color);
 }
 /* end of footer styling */
