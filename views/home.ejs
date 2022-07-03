@@ -309,15 +309,18 @@
 
         // creates delete options for user to select from
         allPasswordAccounts.map(function(item) {
+            let accountNameDivider = document.createElement("div");
             let accountName = document.createElement("p");
             let horizontalLine = document.createElement("hr");
 
             accountName.textContent = item.textContent;
 
             accountName.classList.add("delete-account-name");
+            accountNameDivider.classList.add("delete-password-accounts-list-item");
 
-            deletePasswordAccountsList.appendChild(accountName);
-            deletePasswordAccountsList.appendChild(horizontalLine);
+            accountNameDivider.appendChild(accountName);
+            accountNameDivider.appendChild(horizontalLine);
+            deletePasswordAccountsList.appendChild(accountNameDivider);
         });
 
         let [...allDeletePasswordAccounts] = document.querySelectorAll(".delete-account-name");
