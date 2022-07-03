@@ -14,7 +14,7 @@ const [...closePasswordAccountBtns] = document.querySelectorAll(".close-password
 const [...openPasswordResultBtns] = document.querySelectorAll(".open-password-result-modal");
 
 // selects buttons for result of delete modal
-const openDeleteResultBtnMain = document.querySelector(".delete-main-account");
+const openDeleteResultBtnMain = document.querySelector(".select-delete-main-account");
 const openDeleteResultBtnOther = document.querySelector(".delete-option-password");
 const closeDeleteResultBtns = [document.querySelector(".delete-ok"), document.querySelector(".delete-no")];
 
