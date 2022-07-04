@@ -15,7 +15,7 @@ const { authorise } = require("./middleware/authorise.js");
 // database connection
 const dbURI = process.env.DATABASE_URI;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result) => app.listen(4030))
+.then((result) => app.listen(4030, () => console.log("app running on port 4030")))
 .catch((err) => console.log(err));
 
 // view engine
