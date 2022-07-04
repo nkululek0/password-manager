@@ -13,6 +13,6 @@
 - validator
 
 ## instructions
-1. change the "dotenv" file to ".env".
-2. add values to variables within the .env file, namely DATABASE_URI and SECRECT_KEY.
+1. change the `dotenv` file to `.env`.
+2. add values to variables within the .env file, namely `DATABASE_URI` and `SECRECT_KEY`.
 3. within the terminal type `npm install` followed by `npm run` once modules are installed.
