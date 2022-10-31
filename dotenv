@@ -1,8 +1,0 @@
-DATABASE_URI =
-SECRECT_KEY = 
-
-<!-- 
- incase you don't have access to your own database use:
- 
- mongodb+srv://nkululek0:mongodb@certification.bscdz.mongodb.net/node-auth
- -->

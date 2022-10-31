@@ -23,6 +23,9 @@ module.exports.createPasswordAccount = async function(req, res) {
             // encrypt password for password account and add password accounts to accounts array 
             accountPassword = encrypt(accountPassword);
 
+            // ensures that first letter is in uppercase
+            accountName = accountName.replace(accountName[0], accountName[0].toUpperCase());
+
             await User.findOneAndUpdate({ email: req.params.email }, {
                 $push: {
                     accounts: {
@@ -129,11 +132,11 @@ function indexValue(arr, value) {
 
 // encrypt and return encrypted version of message
 function encrypt(message) {
-    return cryptoJs.AES.encrypt(message, process.env.SECRECT_KEY).toString();
+    return cryptoJs.AES.encrypt(message, process.env.SECRET_KEY).toString();
 }
 
 // decrypt and return decrypted version of message
 function decrypt(message) {
-    let bytes = cryptoJs.AES.decrypt(message, process.env.SECRECT_KEY);
+    let bytes = cryptoJs.AES.decrypt(message, process.env.SECRET_KEY);
     return bytes.toString(cryptoJs.enc.Utf8);
 }
