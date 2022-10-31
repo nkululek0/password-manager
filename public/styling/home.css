@@ -418,6 +418,7 @@ body {
     transition: 500ms ease-in-out;
     /* border: 1px solid black; */
     width: 45%;
+    height: 45%;
     border-radius: 5px;
     z-index: 10;
     background-color: white;
@@ -428,7 +429,7 @@ body {
     .close-password-account-modal {
         display: flex;
         flex-direction: row-reverse;
-        padding: 0 0.4rem;
+        padding: 0 0.7rem;
     }
         .close-password-account-modal > p {
             font-size: 1.7rem;
@@ -437,6 +438,7 @@ body {
 
     .password-account-main {
         display: flex;
+        height: 100%;
     }
         .password-account-name {
             display: flex;
@@ -445,7 +447,7 @@ body {
             width: 30%;
             background-color: aqua;
         }
-            .password-account-inital {
+            .password-account-initial {
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -473,16 +475,22 @@ body {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
-                gap: .3rem;
+                gap: 0.3rem;
             }
                 .password-account-details > form > .form-fields {
                         padding: 0;
+                    }
+                .password-account-details > form > .password-manipulation {
+                    margin-top: 1rem;
+                }
+                    .password-account-details > form > .password-manipulation span:hover {
+                        cursor: pointer;
                     }
             .password-account-modal-button-options {
                 display: flex;
                 justify-content: space-between;
                 gap: 2rem;
-                margin: 1rem 0 .7rem;
+                margin: 2rem 0 0.7rem;
             }
                 .password-account-button {
                     width: 5rem;

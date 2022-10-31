@@ -132,11 +132,11 @@ function indexValue(arr, value) {
 
 // encrypt and return encrypted version of message
 function encrypt(message) {
-    return cryptoJs.AES.encrypt(message, process.env.SECRECT_KEY).toString();
+    return cryptoJs.AES.encrypt(message, process.env.SECRET_KEY).toString();
 }
 
 // decrypt and return decrypted version of message
 function decrypt(message) {
-    let bytes = cryptoJs.AES.decrypt(message, process.env.SECRECT_KEY);
+    let bytes = cryptoJs.AES.decrypt(message, process.env.SECRET_KEY);
     return bytes.toString(cryptoJs.enc.Utf8);
 }
