@@ -1,21 +1,23 @@
 require("dotenv").config();
 const express = require("express");
+const app = express();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-// creation of routes functionality
-const app = express();
 
 // middleware
 app.use(express.static("public"));    
 app.use(express.json());
 app.use(cookieParser());
 const { authorise } = require("./middleware/authorise.js");
-
 // database connection
 const dbURI = process.env.DATABASE_URI;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result) => app.listen(4030, () => console.log("app running on port 4030")))
+.then((result) => server.listen(4030, () => console.log("app running on port 4030")))
 .catch((err) => console.log(err));
 
 // view engine
@@ -32,3 +34,10 @@ app.use("/api", preLoginRoutes);
 // routes for when user has logged in
 const postLoginRoutes = require("./routes/post-login-routes.js");
 app.use("/api",  authorise, postLoginRoutes);
+
+// share the password to all users
+io.on("connection", (socket) => {
+    socket.on("share-password", (sharedPassword) => {
+        socket.broadcast.emit("receive-password", sharedPassword);
+    });
+});

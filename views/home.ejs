@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/styling/home.css">
     <script defer src="/scripts/modal.js"></script>
     <script defer src="/scripts/requests.js"></script>
+    <script defer src="/scripts/jquery/jquery-3.6.1.min.js"></script>
 </head>
 <body>
     <div class="main-content">
@@ -50,6 +51,11 @@
                     <div class="operation-creation-div">
                         <button class="operation-create open-modal">Create</button>
                         <%- include("modals/create-password-account-modal"); %>
+                    </div>
+                    <div class="operation-receive-div">
+                        <button class="operation-receive">Receive</button>
+                        <div class="received-passwords hide"></div>
+                        <p class="cancel-received-passwords hide">cancel</p>
                     </div>
                     <div class="operation-deletion-div">
                         <button class="operation-delete">Delete</button>
@@ -212,7 +218,7 @@
 
             let response = updatePasswordAccount(accountName, accountUsername, accountPassword);
 
-            if(data.error) {
+            if(response.error) {
                 passwordResultText[index].textContent = data.error;
             } else if(response) {
                 passwordResultText[index].textContent = "update success!";
@@ -259,7 +265,25 @@
 
 // end of search password accounts section
 
+// receive section
+    const receiveSection = document.querySelector(".operation-receive-div");
+    const receiveBtn = document.querySelector(".operation-receive");
+    const receivedPasswords = document.querySelector(".received-passwords");
+    const closeReceivedPasswords = document.querySelector(".cancel-received-passwords");
 
+    receiveBtn.addEventListener("click", function(event) {
+        deleteBtn.classList.add("hide");
+        openPasswordModal.classList.add("hide");
+        receivedPasswords.classList.remove("hide");
+        closeReceivedPasswords.classList.remove("hide");
+    });
+
+    closeReceivedPasswords.addEventListener("click", function() {
+        this.classList.add("hide");
+        receivedPasswords.classList.add("hide");
+        deleteBtn.classList.remove("hide");
+        openPasswordModal.classList.remove("hide");
+    });
 
 // delete section
 
@@ -285,6 +309,7 @@
     //delete modal button functionality
     deleteBtn.addEventListener("click", function() {
         openPasswordModal.classList.add("hide");
+        receiveSection.classList.add("hide");
         logOutBtn.classList.add("hide");
         deleteOptions.classList.add("active");
 
@@ -292,8 +317,8 @@
         const cancelDelete = document.querySelector(".delete-cancel");
 
         cancelDelete.addEventListener("click", function() {
-            console.log("cancel clicked")
             openPasswordModal.classList.remove("hide");
+            receiveSection.classList.remove("hide");
             logOutBtn.classList.remove("hide");
             deleteOptions.classList.remove("active");
             deletePasswordAccountsList.textContent = "";
@@ -404,5 +429,5 @@
 
 // end of global functions section 
 </script>
-
+<script src="/socket.io/socket.io.js"></script>
 <%- include("partials/footer") %>

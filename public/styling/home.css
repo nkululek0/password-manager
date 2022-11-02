@@ -152,16 +152,19 @@ body {
                         justify-content: center;
                         width: 100%;
                     }
-                    .operation-creation-div, .operation-deletion-div {
+                    .operation-creation-div,
+                    .operation-receive-div,
+                    .operation-deletion-div {
                         align-self: center;
                     }
                     .operation-deletion-div {
-                        align-self: center;
                         display: flex;
                         flex-direction: column;
                         gap: 2rem;
                     }
-                    .operation-create, .operation-delete {
+                    .operation-create,
+                    .operation-delete,
+                    .operation-receive {
                         align-self: center;
                         position: relative;
                         width: 10rem;
@@ -176,6 +179,28 @@ body {
                         background-color: green;
                         box-shadow: -3px 3px white, -4px 4px 3px green;
                     }
+                    .operation-receive {
+                        background-color: yellow;
+                        box-shadow: -3px 3px white, -4px 4px 3px yellow;
+                    }
+                        .received-passwords {
+                            display: flex;
+                            justify-content: center;
+                            flex-direction: column;
+                            padding: 1rem 0;
+                            text-align: center;
+                            cursor: pointer;
+                        }
+                            .received-password-name {
+                                margin: 0.3rem 0;
+                            }
+                            .received-password-name:hover {
+                                font-weight: bold;
+                            }
+                            .received-password-name + hr {
+                                width: 7rem;
+                                align-self: center;
+                            }
                     .operation-delete {
                         background-color: red;
                         box-shadow: -3px 3px white, -4px 4px 3px red;
@@ -185,7 +210,9 @@ body {
                             left: -1px;
                             box-shadow: -1px 1px white, -2px 2px 3px green;
                         }
-                        .operation-create:hover, .operation-delete:hover {
+                        .operation-create:hover,
+                        .operation-receive:hover,
+                        .operation-delete:hover {
                             cursor: pointer;
                         }
                         .operation-delete:active {
@@ -210,8 +237,16 @@ body {
                                 align-items: center;
                                 gap: 1rem;
                             }
-                                .delete-option-indicator {
+                                .delete-option-indicator,
+                                .cancel-received-passwords {
                                     font-size: 1.2rem;
+                                }
+                                .cancel-received-passwords {
+                                    text-align: center;
+                                    margin-top: 1.2rem;
+                                }
+                                .cancel-received-passwords:hover {
+                                    cursor: pointer;
                                 }
                                 .select-delete-main-account {
                                     align-self: center;
@@ -253,7 +288,8 @@ body {
                                         flex-direction: column;
                                         gap: 0.3rem;
                                     }
-                                    .delete-password-accounts-list-item > hr {
+                                    .delete-password-accounts-list-item > hr,
+                                    .received-passwords >  hr {
                                         border: 1px solid var(--shadow-color);
                                         box-shadow: 0px 2px 4px var(--shadow-color);
                                     }

@@ -23,9 +23,6 @@ module.exports.createPasswordAccount = async function(req, res) {
             // encrypt password for password account and add password accounts to accounts array 
             accountPassword = encrypt(accountPassword);
 
-            // ensures that first letter is in uppercase
-            accountName = accountName.replace(accountName[0], accountName[0].toUpperCase());
-
             await User.findOneAndUpdate({ email: req.params.email }, {
                 $push: {
                     accounts: {
@@ -46,7 +43,7 @@ module.exports.createPasswordAccount = async function(req, res) {
 module.exports.updatePasswordAccount = async function(req, res) {
     let { accountName, accountUsername, accountPassword } = req.body;
 
-    // decrypt account password before attempting tp update password account
+    // decrypt account password before attempting to update password account
     accountPassword = decrypt(accountPassword) ? decrypt(accountPassword) : accountPassword;
 
     try {
@@ -65,6 +62,7 @@ module.exports.updatePasswordAccount = async function(req, res) {
             }
         });
 
+        const user2 = await User.find({ email: req.params.email })
         // user does not exist error
         if(user === null) {
             return res.status(404).json({ error: "user not found" });
@@ -77,15 +75,11 @@ module.exports.updatePasswordAccount = async function(req, res) {
     }
 }
 
-// GET requests
-// encrypt password
-module.exports.encryptPassword = function(req, res) {
-    res.json({ password: encrypt(req.params.accountPassword) });
-}
-
 // decrypt password
 module.exports.decryptPassword = function(req, res) {
-    res.json({ password: decrypt(req.params.accountPassword) });
+    let password = decodeURIComponent(req.params.accountPassword);
+    password = decrypt(password);
+    res.send({ password });
 }
 
 // delete password account

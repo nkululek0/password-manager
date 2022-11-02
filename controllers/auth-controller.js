@@ -48,7 +48,7 @@ module.exports.postLogin = async function(req, res) {
 const maxAge = 600;
 
 function createToken(payload) {
-    return jwt.sign({ payload }, process.env.SECRECT_KEY, { expiresIn: maxAge });
+    return jwt.sign({ payload }, process.env.SECRET_KEY, { expiresIn: maxAge });
 }
 
 
@@ -77,13 +77,13 @@ function loginErrors(err) {
 
     // incorrect email error
     if(err.message === "Incorrect email") {
-        errorMessages.email = "Please enter valid email";
+        errorMessages.email = "Incorrect, Please enter valid email";
         return errorMessages;
     }
 
     // incorrect password error
     if(err.message === "Incorrect password") {
-        errorMessages.password = "Please enter valid password";
+        errorMessages.password = "Incorrect, Please enter valid password";
         return errorMessages;
     }
 }
