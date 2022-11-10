@@ -26,7 +26,8 @@ module.exports.createPasswordAccount = async function(req, res) {
             await User.findOneAndUpdate({ email: req.params.email }, {
                 $push: {
                     accounts: {
-                        accountName, accountUsername, accountPassword
+                        $each: [{ accountName, accountUsername, accountPassword }],
+                        $sort: { accountName: 1 }
                     }
                 }
             });
@@ -106,8 +107,8 @@ module.exports.deleteUserAccount = async function(req, res) {
         // delete user based off of the id
         await User.findOneAndDelete({ email: req.params.email });
 
-        console.log(`successfully deleted user ${ req.params.email }`);
         res.cookie("login", "", { maxAge: 1 });
+        console.log(`successfully deleted user ${ req.params.email }`);
     } catch(err) {
         res.json({ error: err.message });
     }

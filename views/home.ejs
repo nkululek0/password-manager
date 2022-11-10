@@ -71,7 +71,7 @@
                                         <div class="downwards-arrow">&darr;</div>
                                         <p class="delete-option-indicator">Password Account</p>
                                     </div>
-                                    <div class="delete-password-accounts-list"></div>
+                                    <ul class="delete-password-accounts-list"></ul>
                                 </div>
                                 <%- include("modals/delete-password-account-modal"); %>
                             </div>
@@ -343,7 +343,7 @@
 
         // creates delete options for user to select from
         allPasswordAccounts.map(function(item) {
-            let accountNameDivider = document.createElement("div");
+            let accountNameDivider = document.createElement("li");
             let accountName = document.createElement("p");
             let horizontalLine = document.createElement("hr");
 
@@ -397,7 +397,9 @@
 
         allModalDeleteBtns[0].addEventListener("click", function() {
             if(deleteUserAccount(username)) {
-                loginRedirect();
+                setTimeout(function() {
+                    loginRedirect();
+                }, 1200);
             }
         });
     });
