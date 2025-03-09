@@ -1,5 +1,5 @@
 # Safe Store
-*a password manager, that utilises a database to store information opposed to storing it locally on a computer. Unlike conventional password managers, its simple yet, extraodinary user interface captures the heart of the user and makes it a dream to interact with it.*
+*a password manager, that utilises a database to store information opposed to storing it locally on a computer. Unlike conventional password managers, its simple yet, extraordinary user interface captures the heart of the user and makes it a dream to interact with it.*
 
 ### packages that were used
 - express
